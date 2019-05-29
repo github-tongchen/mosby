@@ -16,6 +16,8 @@
 
 package com.hannesdorfmann.mosby3.mvp.viewstate;
 
+import android.support.annotation.NonNull;
+
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
@@ -45,7 +47,7 @@ public abstract class MvpViewStateActivity<V extends MvpView, P extends MvpPrese
    */
   protected boolean restoringViewState = false;
 
-  @Override protected ActivityMvpDelegate<V, P> getMvpDelegate() {
+  @Override @NonNull protected ActivityMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
       mvpDelegate = new ActivityMvpViewStateDelegateImpl<>(this, this, true);
     }

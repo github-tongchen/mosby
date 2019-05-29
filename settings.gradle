@@ -1,14 +1,9 @@
-include ':mvp-common', ':mvp-queuing-presenter',
-    ':mvp',
-    ':viewstate',
-    ':sample',
-    ':mvi',
-//    ':sample-mail',
-    ':mvp-lce',
-    ':mvp-nullobject-presenter',
-    ':mvi-common',
-    ':mvi-integration-test',
-    ':sample-mvi',
-    ':presentermanager',
-    ':utils-fragment'
-    // ':utils-fragment-integration-test'
+include ':mvp-common',
+        ':mvp-queuing-presenter',
+        ':mvp',
+        ':viewstate',
+        ':sample',
+        ':sample-mail',
+        ':mvp-lce',
+        ':presentermanager',
+        ':utils-fragment'

@@ -1,1 +1,0 @@
-This module is just used to run integration test of the MVI module on a real device.

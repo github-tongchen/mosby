@@ -108,9 +108,9 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
    *
    * @return {@link ActivityMvpDelegateImpl}
    */
-  @NonNull protected ActivityMvpDelegate<V, P> getMvpDelegate() {
+  @NonNull protected ActivityMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
-      mvpDelegate = new ActivityMvpDelegateImpl(this, this, true);
+      mvpDelegate = new ActivityMvpDelegateImpl<>(this, this, true);
     }
 
     return mvpDelegate;
