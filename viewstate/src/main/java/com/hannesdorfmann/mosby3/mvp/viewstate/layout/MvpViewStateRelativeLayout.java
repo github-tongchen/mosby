@@ -17,6 +17,7 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
@@ -56,10 +57,10 @@ public abstract class MvpViewStateRelativeLayout<V extends MvpView, P extends Mv
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 
-  @Override
-  protected ViewGroupMvpDelegate<V, P> getMvpDelegate() {
+  @Override @NonNull
+  protected ViewGroupMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
-      mvpDelegate = new ViewGroupMvpViewStateDelegateImpl<V, P, VS>(this, this, true);
+      mvpDelegate = new ViewGroupMvpViewStateDelegateImpl<>(this, this, true);
     }
 
     return mvpDelegate;

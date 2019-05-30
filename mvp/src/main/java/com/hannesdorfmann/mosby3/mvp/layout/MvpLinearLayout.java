@@ -38,7 +38,7 @@ public abstract class MvpLinearLayout<V extends MvpView, P extends MvpPresenter<
     extends LinearLayout implements MvpView, ViewGroupDelegateCallback<V, P> {
 
   protected P presenter;
-  protected ViewGroupMvpDelegate<V, P> mvpDelegate;
+  protected ViewGroupMvpDelegate mvpDelegate;
   private boolean retainInstance = false;
 
   public MvpLinearLayout(Context context) {
@@ -73,7 +73,7 @@ public abstract class MvpLinearLayout<V extends MvpView, P extends MvpPresenter<
    *
    * @return {@link ViewGroupMvpDelegate}
    */
-  @NonNull protected ViewGroupMvpDelegate<V, P> getMvpDelegate() {
+  @NonNull protected ViewGroupMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
       mvpDelegate = new ViewGroupMvpDelegateImpl<>(this, this, true);
     }

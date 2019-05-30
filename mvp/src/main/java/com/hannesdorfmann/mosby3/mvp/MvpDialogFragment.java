@@ -23,7 +23,7 @@ import com.hannesdorfmann.mosby3.mvp.delegate.MvpDelegateCallback;
 public abstract class MvpDialogFragment<V extends MvpView, P extends MvpPresenter<V>> extends DialogFragment
     implements MvpDelegateCallback<V, P>, MvpView {
 
-  protected FragmentMvpDelegate<V, P> mvpDelegate;
+  protected FragmentMvpDelegate mvpDelegate;
 
   /**
    * The presenter for this view. Will be instantiated with {@link #createPresenter()}
@@ -52,7 +52,7 @@ public abstract class MvpDialogFragment<V extends MvpView, P extends MvpPresente
    *
    * @return {@link FragmentMvpDelegateImpl}
    */
-  @NonNull protected FragmentMvpDelegate<V, P> getMvpDelegate() {
+  @NonNull protected FragmentMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
       mvpDelegate = new FragmentMvpDelegateImpl<>(this, this, true, true);
     }

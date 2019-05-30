@@ -38,7 +38,7 @@ public abstract class MvpRelativeLayout<V extends MvpView, P extends MvpPresente
     extends RelativeLayout implements MvpView, ViewGroupDelegateCallback<V, P> {
 
   protected P presenter;
-  protected ViewGroupMvpDelegate<V, P> mvpDelegate;
+  protected ViewGroupMvpDelegate mvpDelegate;
   private boolean retainInstance = false;
 
   public MvpRelativeLayout(Context context) {
@@ -72,7 +72,7 @@ public abstract class MvpRelativeLayout<V extends MvpView, P extends MvpPresente
    *
    * @return {@link ViewGroupMvpDelegate}
    */
-  @NonNull protected ViewGroupMvpDelegate<V, P> getMvpDelegate() {
+  @NonNull protected ViewGroupMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
       mvpDelegate = new ViewGroupMvpDelegateImpl<>(this, this, true);
     }

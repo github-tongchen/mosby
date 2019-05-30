@@ -38,7 +38,7 @@ public abstract class MvpFrameLayout<V extends MvpView, P extends MvpPresenter<V
     extends FrameLayout implements ViewGroupDelegateCallback<V, P>, MvpView {
 
   protected P presenter;
-  protected ViewGroupMvpDelegate<V, P> mvpDelegate;
+  protected ViewGroupMvpDelegate mvpDelegate;
   private boolean retainInstance = false;
 
   public MvpFrameLayout(Context context) {
@@ -72,7 +72,7 @@ public abstract class MvpFrameLayout<V extends MvpView, P extends MvpPresenter<V
    *
    * @return {@link ViewGroupMvpDelegate}
    */
-  @NonNull protected ViewGroupMvpDelegate<V, P> getMvpDelegate() {
+  @NonNull protected ViewGroupMvpDelegate getMvpDelegate() {
     if (mvpDelegate == null) {
       mvpDelegate = new ViewGroupMvpDelegateImpl<>(this, this, true);
     }
