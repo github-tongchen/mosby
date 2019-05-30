@@ -39,6 +39,8 @@ public abstract class BaseFragment extends Fragment {
   private Unbinder unbinder;
 
   @Override public void onCreate(Bundle savedInstanceState) {
+    injectDependencies();
+
     super.onCreate(savedInstanceState);
     FragmentArgs.inject(this);
   }
@@ -58,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    injectDependencies();
+//    injectDependencies();
     super.onViewCreated(view, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
   }
