@@ -28,5 +28,5 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableParcelableViewState;
  * @since 1.0.0
  */
 public interface ParcelableLceViewState<D, V extends MvpLceView<D>>
-    extends RestorableParcelableViewState<V>, LceViewState<D, V> {
+        extends RestorableParcelableViewState<V>, LceViewState<D, V> {
 }

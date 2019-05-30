@@ -17,6 +17,7 @@
 package com.hannesdorfmann.mosby3.mvp.viewstate;
 
 import android.support.v4.app.Fragment;
+
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 /**
@@ -41,12 +42,12 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  */
 public interface ViewState<V extends MvpView> {
 
-  /**
-   * Called to apply this viewstate on a given view.
-   *
-   * @param view The {@link MvpView}
-   * @param retained true, if the components like the viewstate and the presenter have been
-   * retained in memory, otherwise false (viewstate has been restored from Bundle / Parcelable)
-   */
-  void apply(V view, boolean retained);
+    /**
+     * Called to apply this viewstate on a given view.
+     *
+     * @param view     The {@link MvpView}
+     * @param retained true, if the components like the viewstate and the presenter have been
+     *                 retained in memory, otherwise false (viewstate has been restored from Bundle / Parcelable)
+     */
+    void apply(V view, boolean retained);
 }

@@ -1,7 +1,9 @@
 package com.hannesdorfmann.mosby3.sample.mail;
 
 import com.hannesdorfmann.mosby3.sample.mail.dagger.NavigationModule;
+
 import dagger.Component;
+
 import javax.inject.Singleton;
 
 /**
@@ -9,7 +11,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(
-    modules = NavigationModule.class) public interface MainActivityComponent {
+        modules = NavigationModule.class)
+public interface MainActivityComponent {
 
-  void inject(MainActivity activity);
+    void inject(MainActivity activity);
 }

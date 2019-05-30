@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
+
 import com.hannesdorfmann.mosby3.MosbySavedState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableParcelableViewState;
 
@@ -33,40 +34,41 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableParcelableViewState;
  */
 public class MosbyViewStateSavedState extends MosbySavedState {
 
-  public static final Parcelable.Creator<MosbyViewStateSavedState> CREATOR =
-      ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<MosbyViewStateSavedState>() {
-        public MosbyViewStateSavedState createFromParcel(Parcel in, ClassLoader loader) {
-          if (loader == null) {
-            loader = RestorableParcelableViewState.class.getClassLoader();
-          }
-          return new MosbyViewStateSavedState(in, loader);
-        }
+    public static final Parcelable.Creator<MosbyViewStateSavedState> CREATOR =
+            ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<MosbyViewStateSavedState>() {
+                public MosbyViewStateSavedState createFromParcel(Parcel in, ClassLoader loader) {
+                    if (loader == null) {
+                        loader = RestorableParcelableViewState.class.getClassLoader();
+                    }
+                    return new MosbyViewStateSavedState(in, loader);
+                }
 
-        public MosbyViewStateSavedState[] newArray(int size) {
-          return new MosbyViewStateSavedState[size];
-        }
-      });
+                public MosbyViewStateSavedState[] newArray(int size) {
+                    return new MosbyViewStateSavedState[size];
+                }
+            });
 
-  private RestorableParcelableViewState mosbyViewState;
+    private RestorableParcelableViewState mosbyViewState;
 
-  public MosbyViewStateSavedState(Parcelable superState, @NonNull String viewId,
-      @Nullable RestorableParcelableViewState viewState) {
-    super(superState, viewId);
-    this.mosbyViewState = viewState;
-  }
+    public MosbyViewStateSavedState(Parcelable superState, @NonNull String viewId,
+                                    @Nullable RestorableParcelableViewState viewState) {
+        super(superState, viewId);
+        this.mosbyViewState = viewState;
+    }
 
-  protected MosbyViewStateSavedState(Parcel in, ClassLoader loader) {
-    super(in, loader);
-    this.mosbyViewState = in.readParcelable(loader);
-  }
+    protected MosbyViewStateSavedState(Parcel in, ClassLoader loader) {
+        super(in, loader);
+        this.mosbyViewState = in.readParcelable(loader);
+    }
 
-  @Override public void writeToParcel(Parcel out, int flags) {
-    super.writeToParcel(out, flags);
-    out.writeParcelable(mosbyViewState, flags);
-  }
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+        out.writeParcelable(mosbyViewState, flags);
+    }
 
-  @Nullable
-  public RestorableParcelableViewState getRestoreableViewState() {
-    return mosbyViewState;
-  }
+    @Nullable
+    public RestorableParcelableViewState getRestoreableViewState() {
+        return mosbyViewState;
+    }
 }

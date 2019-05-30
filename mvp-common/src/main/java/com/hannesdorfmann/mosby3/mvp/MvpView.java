@@ -23,4 +23,5 @@ package com.hannesdorfmann.mosby3.mvp;
  * @since 1.0.0
  */
 public interface MvpView {
+
 }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 @TargetApi(21)
 public class TextSizeTransition extends Transition {
     private static final String PROPNAME_TEXT_SIZE = "mosby-mail:transition:textsize";
-    private static final String[] TRANSITION_PROPERTIES = { PROPNAME_TEXT_SIZE };
+    private static final String[] TRANSITION_PROPERTIES = {PROPNAME_TEXT_SIZE};
 
     private static final Property<TextView, Float> TEXT_SIZE_PROPERTY =
             new Property<TextView, Float>(Float.class, "textSize") {

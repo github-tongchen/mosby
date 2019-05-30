@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.sample.mail.model.mail;
 import com.hannesdorfmann.mosby3.sample.mail.model.account.Account;
 import com.hannesdorfmann.mosby3.sample.mail.model.account.AccountManager;
 import com.hannesdorfmann.mosby3.sample.mail.model.account.AuthCredentials;
+
 import rx.Observable;
 
 /**
@@ -26,15 +27,18 @@ import rx.Observable;
  */
 public class TestAccountManager implements AccountManager {
 
-  @Override public Observable<Account> doLogin(AuthCredentials credentials) {
-    return null;
-  }
+    @Override
+    public Observable<Account> doLogin(AuthCredentials credentials) {
+        return null;
+    }
 
-  @Override public Account getCurrentAccount() {
-    return null;
-  }
+    @Override
+    public Account getCurrentAccount() {
+        return null;
+    }
 
-  @Override public boolean isUserAuthenticated() {
-    return true;
-  }
+    @Override
+    public boolean isUserAuthenticated() {
+        return true;
+    }
 }

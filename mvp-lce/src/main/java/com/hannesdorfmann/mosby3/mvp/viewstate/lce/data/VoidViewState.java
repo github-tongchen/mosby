@@ -35,4 +35,5 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
  */
 @SuppressWarnings("ParcelCreator")
 public class VoidViewState<V extends MvpLceView<Void>> extends AbsParcelableLceViewState<Void, V> {
+
 }

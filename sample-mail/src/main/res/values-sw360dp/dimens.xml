@@ -16,5 +16,5 @@
 
 <resources>
 
-  <dimen name="navigation_drawer_width">304dp</dimen>
+    <dimen name="navigation_drawer_width">304dp</dimen>
 </resources>

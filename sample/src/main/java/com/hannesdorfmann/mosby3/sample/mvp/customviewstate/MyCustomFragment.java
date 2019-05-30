@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateFragment;
 import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
 import com.hannesdorfmann.mosby3.sample.R;
@@ -38,61 +39,74 @@ import butterknife.Unbinder;
  * @author Hannes Dorfmann
  */
 public class MyCustomFragment extends MvpViewStateFragment<MyCustomView, MyCustomPresenter, MyCustomViewState>
-    implements MyCustomView {
+        implements MyCustomView {
 
-  private Unbinder unbinder;
+    private Unbinder unbinder;
 
-  @BindView(R.id.textViewA) TextView aView;
-  @BindView(R.id.textViewB) TextView bView;
+    @BindView(R.id.textViewA)
+    TextView aView;
+    @BindView(R.id.textViewB)
+    TextView bView;
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.my_custom_view, container, false);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.my_custom_view, container, false);
+    }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        unbinder = ButterKnife.bind(this, view);
+    }
 
-  @Override public MyCustomViewState createViewState() {
-    return new MyCustomViewState();
-  }
+    @Override
+    public MyCustomViewState createViewState() {
+        return new MyCustomViewState();
+    }
 
-  @Override public void onNewViewStateInstance() {
-    presenter.doA();
-  }
+    @Override
+    public void onNewViewStateInstance() {
+        presenter.doA();
+    }
 
-  @Override public MyCustomPresenter createPresenter() {
-    return new MyCustomPresenter();
-  }
+    @Override
+    public MyCustomPresenter createPresenter() {
+        return new MyCustomPresenter();
+    }
 
-  @Override public void showA(A a) {
-    viewState.setShowingA(true);
-    viewState.setData(a);
-    aView.setText(a.getName());
-    aView.setVisibility(View.VISIBLE);
-    bView.setVisibility(View.GONE);
-  }
+    @Override
+    public void showA(A a) {
+        viewState.setShowingA(true);
+        viewState.setData(a);
+        aView.setText(a.getName());
+        aView.setVisibility(View.VISIBLE);
+        bView.setVisibility(View.GONE);
+    }
 
-  @Override public void showB(B b) {
-    viewState.setShowingA(false);
-    viewState.setData(b);
-    bView.setText(b.getFoo());
-    aView.setVisibility(View.GONE);
-    bView.setVisibility(View.VISIBLE);
-  }
+    @Override
+    public void showB(B b) {
+        viewState.setShowingA(false);
+        viewState.setData(b);
+        bView.setText(b.getFoo());
+        aView.setVisibility(View.GONE);
+        bView.setVisibility(View.VISIBLE);
+    }
 
-  @OnClick(R.id.loadA) public void onLoadAClicked() {
-    presenter.doA();
-  }
+    @OnClick(R.id.loadA)
+    public void onLoadAClicked() {
+        presenter.doA();
+    }
 
-  @OnClick(R.id.loadB) public void onLoadBClicked() {
-    presenter.doB();
-  }
+    @OnClick(R.id.loadB)
+    public void onLoadBClicked() {
+        presenter.doB();
+    }
 }

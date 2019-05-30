@@ -21,37 +21,47 @@ import com.hannesdorfmann.mosby3.sample.mail.model.account.DefaultAccountManager
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailGenerator;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailProvider;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.RandomMailGenerator;
+
 import dagger.Module;
 import dagger.Provides;
 import de.greenrobot.event.EventBus;
+
 import javax.inject.Singleton;
 
 /**
  * @author Hannes Dorfmann
  */
-@Module public class MailModule {
+@Module
+public class MailModule {
 
-  // Singletons
-  private static MailGenerator generator = new RandomMailGenerator();
-  private static AccountManager accountManager = new DefaultAccountManager();
-  private static MailProvider mailProvider = new MailProvider(accountManager, generator);
+    // Singletons
+    private static MailGenerator generator = new RandomMailGenerator();
+    private static AccountManager accountManager = new DefaultAccountManager();
+    private static MailProvider mailProvider = new MailProvider(accountManager, generator);
 
-  @Singleton @Provides public AccountManager providesAccountManager() {
-    return accountManager;
-  }
+    @Singleton
+    @Provides
+    public AccountManager providesAccountManager() {
+        return accountManager;
+    }
 
-  @Singleton @Provides public EventBus providesEventBus() {
-    return EventBus.getDefault();
-  }
+    @Singleton
+    @Provides
+    public EventBus providesEventBus() {
+        return EventBus.getDefault();
+    }
 
-  @Singleton @Provides
-  public MailProvider providesMailProvider(AccountManager manager, MailGenerator generator) {
-    return mailProvider;
-  }
+    @Singleton
+    @Provides
+    public MailProvider providesMailProvider(AccountManager manager, MailGenerator generator) {
+        return mailProvider;
+    }
 
-  @Singleton @Provides public MailGenerator providesMailGenerator() {
-    return generator;
-  }
+    @Singleton
+    @Provides
+    public MailGenerator providesMailGenerator() {
+        return generator;
+    }
 
   /*
   @Singleton @Provides public AccountManager providesAccountManager() {

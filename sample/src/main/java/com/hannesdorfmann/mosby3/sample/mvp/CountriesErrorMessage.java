@@ -17,6 +17,7 @@
 package com.hannesdorfmann.mosby3.sample.mvp;
 
 import android.content.Context;
+
 import com.hannesdorfmann.mosby3.sample.R;
 
 /**
@@ -24,12 +25,12 @@ import com.hannesdorfmann.mosby3.sample.R;
  */
 public class CountriesErrorMessage {
 
-  public static String get(Throwable e, boolean pullToRefresh, Context c) {
-    // TODO distinguish type of exception and retrun different strings
-    if (pullToRefresh) {
-      return c.getString(R.string.error_countries);
-    } else {
-      return c.getString(R.string.error_countries_retry);
+    public static String get(Throwable e, boolean pullToRefresh, Context c) {
+        // TODO distinguish type of exception and retrun different strings
+        if (pullToRefresh) {
+            return c.getString(R.string.error_countries);
+        } else {
+            return c.getString(R.string.error_countries_retry);
+        }
     }
-  }
 }

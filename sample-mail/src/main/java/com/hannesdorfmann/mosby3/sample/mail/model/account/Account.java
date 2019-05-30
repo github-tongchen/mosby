@@ -18,6 +18,7 @@ package com.hannesdorfmann.mosby3.sample.mail.model.account;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.sample.mail.R;
 import com.hannesdorfmann.mosby3.sample.mail.model.contact.Person;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
@@ -25,41 +26,44 @@ import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 /**
  * @author Hannes Dorfmann
  */
-@ParcelablePlease public class Account implements Parcelable {
+@ParcelablePlease
+public class Account implements Parcelable {
 
-  String name = "Ted Mosby";
-  String email = Person.MAIL_TED;
-  int imageRes = R.drawable.ted;
+    String name = "Ted Mosby";
+    String email = Person.MAIL_TED;
+    int imageRes = R.drawable.ted;
 
-  public String getName() {
-    return name;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public int getImageRes() {
-    return imageRes;
-  }
-
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    AccountParcelablePlease.writeToParcel(this, dest, flags);
-  }
-
-  public static final Creator<Account> CREATOR = new Creator<Account>() {
-    public Account createFromParcel(Parcel source) {
-      Account target = new Account();
-      AccountParcelablePlease.readFromParcel(target, source);
-      return target;
+    public String getName() {
+        return name;
     }
 
-    public Account[] newArray(int size) {
-      return new Account[size];
+    public String getEmail() {
+        return email;
     }
-  };
+
+    public int getImageRes() {
+        return imageRes;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        AccountParcelablePlease.writeToParcel(this, dest, flags);
+    }
+
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        public Account createFromParcel(Parcel source) {
+            Account target = new Account();
+            AccountParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
 }

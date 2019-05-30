@@ -18,10 +18,12 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.AbsParcelableLceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
+
 import java.io.Serializable;
 
 /**
@@ -36,34 +38,36 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 public class SerializeableLceViewState<D extends Serializable, V extends MvpLceView<D>>
-    extends AbsParcelableLceViewState<D, V> {
+        extends AbsParcelableLceViewState<D, V> {
 
-  public static final Parcelable.Creator<SerializeableLceViewState> CREATOR =
-      new Parcelable.Creator<SerializeableLceViewState>() {
-        @Override public SerializeableLceViewState createFromParcel(Parcel source) {
-          return new SerializeableLceViewState(source);
-        }
+    public static final Parcelable.Creator<SerializeableLceViewState> CREATOR =
+            new Parcelable.Creator<SerializeableLceViewState>() {
+                @Override
+                public SerializeableLceViewState createFromParcel(Parcel source) {
+                    return new SerializeableLceViewState(source);
+                }
 
-        @Override public SerializeableLceViewState[] newArray(int size) {
-          return new SerializeableLceViewState[size];
-        }
-      };
+                @Override
+                public SerializeableLceViewState[] newArray(int size) {
+                    return new SerializeableLceViewState[size];
+                }
+            };
 
-  public SerializeableLceViewState() {
-  }
+    public SerializeableLceViewState() {
+    }
 
-  private SerializeableLceViewState(Parcel in) {
-    readFromParcel(in);
-  }
+    private SerializeableLceViewState(Parcel in) {
+        readFromParcel(in);
+    }
 
-  public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
 
-    dest.writeSerializable(loadedData);
-    super.writeToParcel(dest, flags);
-  }
+        dest.writeSerializable(loadedData);
+        super.writeToParcel(dest, flags);
+    }
 
-  protected void readFromParcel(Parcel in) {
-    loadedData = (D) in.readSerializable();
-    super.readFromParcel(in);
-  }
+    protected void readFromParcel(Parcel in) {
+        loadedData = (D) in.readSerializable();
+        super.readFromParcel(in);
+    }
 }

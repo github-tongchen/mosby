@@ -25,31 +25,33 @@ import java.util.List;
  */
 class TestMailGenerator implements MailGenerator {
 
-  public static final int MAILS_PER_LABEL = 10;
-  public static final String TEXT = "Text";
-  public static final String SUBJECT = "Text";
-  public static final Date DATE = new Date();
+    public static final int MAILS_PER_LABEL = 10;
+    public static final String TEXT = "Text";
+    public static final String SUBJECT = "Text";
+    public static final Date DATE = new Date();
 
 
-  @Override public List<Mail> generateMails() {
+    @Override
+    public List<Mail> generateMails() {
 
-    List<Mail> mailsList = new ArrayList<>();
+        List<Mail> mailsList = new ArrayList<>();
 
 
-    String[] labels = {Label.INBOX, Label.SENT, Label.SPAM, Label.TRASH};
+        String[] labels = {Label.INBOX, Label.SENT, Label.SPAM, Label.TRASH};
 
-    int id = 0;
+        int id = 0;
 
-    for (String label : labels){
-      for (int i = 0; i< MAILS_PER_LABEL; i++){
-        mailsList.add(new Mail().id(id++).text(TEXT).subject(SUBJECT).date(DATE).label(label).read(i%2 == 0));
-      }
+        for (String label : labels) {
+            for (int i = 0; i < MAILS_PER_LABEL; i++) {
+                mailsList.add(new Mail().id(id++).text(TEXT).subject(SUBJECT).date(DATE).label(label).read(i % 2 == 0));
+            }
+        }
+
+        return mailsList;
     }
 
-    return mailsList;
-  }
-
-  @Override public Mail generateResponseMail(String senderMail) {
-    return null;
-  }
+    @Override
+    public Mail generateResponseMail(String senderMail) {
+        return null;
+    }
 }

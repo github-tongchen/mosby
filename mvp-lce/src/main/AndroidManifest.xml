@@ -17,8 +17,7 @@
 
 <manifest
 
-    package="com.hannesdorfmann.mosby3.mvp.lce"
-    >
+    package="com.hannesdorfmann.mosby3.mvp.lce">
 
-  <application />
+    <application />
 </manifest>

@@ -20,8 +20,10 @@ package com.hannesdorfmann.mosby3.mvp.delegate;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,90 +36,95 @@ import org.mockito.junit.MockitoRule;
  */
 public class ActivityMvpDelegateImplTest {
 
-  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  private MvpView view;
-  private MvpPresenter<MvpView> presenter;
-  private PartialMvpDelegateCallbackImpl callback;
-  private Activity activity;
-  private Application application;
+    private MvpView view;
+    private MvpPresenter<MvpView> presenter;
+    private PartialMvpDelegateCallbackImpl callback;
+    private Activity activity;
+    private Application application;
 
-  @Before public void initComponents() {
-    view = new MvpView() {
-    };
+    @Before
+    public void initComponents() {
+        view = new MvpView() {
+        };
 
-    presenter = Mockito.mock(MvpPresenter.class);
-    callback = Mockito.mock(PartialMvpDelegateCallbackImpl.class);
-    activity = Mockito.mock(Activity.class);
-    application = Mockito.mock(Application.class);
+        presenter = Mockito.mock(MvpPresenter.class);
+        callback = Mockito.mock(PartialMvpDelegateCallbackImpl.class);
+        activity = Mockito.mock(Activity.class);
+        application = Mockito.mock(Application.class);
 
-    Mockito.doCallRealMethod().when(callback).setPresenter(presenter);
-    Mockito.doCallRealMethod().when(callback).getPresenter();
-    Mockito.when(callback.getMvpView()).thenReturn(view);
-    Mockito.when(activity.getApplication()).thenReturn(application);
+        Mockito.doCallRealMethod().when(callback).setPresenter(presenter);
+        Mockito.doCallRealMethod().when(callback).getPresenter();
+        Mockito.when(callback.getMvpView()).thenReturn(view);
+        Mockito.when(activity.getApplication()).thenReturn(application);
 
-    Mockito.when(callback.createPresenter()).thenReturn(presenter);
-  }
+        Mockito.when(callback.createPresenter()).thenReturn(presenter);
+    }
 
-  @Test public void appStartWithScreenOrientationChangeAndFinallyFinishing() {
+    @Test
+    public void appStartWithScreenOrientationChangeAndFinallyFinishing() {
 
-    ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
-        new ActivityMvpDelegateImpl<>(activity, callback, true);
+        ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
+                new ActivityMvpDelegateImpl<>(activity, callback, true);
 
-    startActivity(delegate, null, 1, 1, 1);
-    Bundle bundle = BundleMocker.create();
-    finishActivity(delegate, bundle, true, 1, 0, true, false);
-    startActivity(delegate, bundle, 1, 2, 2);
-    finishActivity(delegate, bundle, false, 2, 1, false, true);
-  }
+        startActivity(delegate, null, 1, 1, 1);
+        Bundle bundle = BundleMocker.create();
+        finishActivity(delegate, bundle, true, 1, 0, true, false);
+        startActivity(delegate, bundle, 1, 2, 2);
+        finishActivity(delegate, bundle, false, 2, 1, false, true);
+    }
 
-  @Test public void appStartFinishing() {
-    ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
-        new ActivityMvpDelegateImpl<>(activity, callback, true);
+    @Test
+    public void appStartFinishing() {
+        ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
+                new ActivityMvpDelegateImpl<>(activity, callback, true);
 
-    startActivity(delegate, null, 1, 1, 1);
-    Bundle bundle = BundleMocker.create();
-    finishActivity(delegate, bundle, false, 1, 1, false, true);
-  }
+        startActivity(delegate, null, 1, 1, 1);
+        Bundle bundle = BundleMocker.create();
+        finishActivity(delegate, bundle, false, 1, 1, false, true);
+    }
 
-  @Test public void dontKeepPresenter() {
-    ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
-        new ActivityMvpDelegateImpl<>(activity, callback, false);
-    startActivity(delegate, null, 1, 1, 1);
-    Bundle bundle = BundleMocker.create();
-    finishActivity(delegate, bundle, false, 1, 1, true, false);
-    startActivity(delegate, bundle, 2, 2, 2);
-    finishActivity(delegate, bundle, false, 2, 2, false, true);
-  }
+    @Test
+    public void dontKeepPresenter() {
+        ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate =
+                new ActivityMvpDelegateImpl<>(activity, callback, false);
+        startActivity(delegate, null, 1, 1, 1);
+        Bundle bundle = BundleMocker.create();
+        finishActivity(delegate, bundle, false, 1, 1, true, false);
+        startActivity(delegate, bundle, 2, 2, 2);
+        finishActivity(delegate, bundle, false, 2, 2, false, true);
+    }
 
-  private void startActivity(ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate,
-      Bundle bundle, int createPresenter, int setPresenter, int attachView) {
+    private void startActivity(ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate,
+                               Bundle bundle, int createPresenter, int setPresenter, int attachView) {
 
-    delegate.onCreate(bundle);
-    delegate.onContentChanged();
-    delegate.onPostCreate(bundle);
-    delegate.onStart();
-    delegate.onResume();
+        delegate.onCreate(bundle);
+        delegate.onContentChanged();
+        delegate.onPostCreate(bundle);
+        delegate.onStart();
+        delegate.onResume();
 
-    Mockito.verify(callback, Mockito.times(createPresenter)).createPresenter();
-    Mockito.verify(callback, Mockito.times(setPresenter)).setPresenter(presenter);
-    Mockito.verify(presenter, Mockito.times(attachView)).attachView(view);
-  }
+        Mockito.verify(callback, Mockito.times(createPresenter)).createPresenter();
+        Mockito.verify(callback, Mockito.times(setPresenter)).setPresenter(presenter);
+        Mockito.verify(presenter, Mockito.times(attachView)).attachView(view);
+    }
 
-  private void finishActivity(ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate,
-      Bundle bundle, boolean expectKeepPresenter, int detachViewCount, int destroyCount,
-      boolean changingConfigurations, boolean isFinishing) {
-    Mockito.when(callback.getPresenter()).thenReturn(presenter);
-    Mockito.when(activity.isChangingConfigurations()).thenReturn(changingConfigurations);
-    Mockito.when(activity.isFinishing()).thenReturn(isFinishing);
+    private void finishActivity(ActivityMvpDelegateImpl<MvpView, MvpPresenter<MvpView>> delegate,
+                                Bundle bundle, boolean expectKeepPresenter, int detachViewCount, int destroyCount,
+                                boolean changingConfigurations, boolean isFinishing) {
+        Mockito.when(callback.getPresenter()).thenReturn(presenter);
+        Mockito.when(activity.isChangingConfigurations()).thenReturn(changingConfigurations);
+        Mockito.when(activity.isFinishing()).thenReturn(isFinishing);
 
-    delegate.onPause();
-    delegate.onSaveInstanceState(bundle);
-    delegate.onStop();
-    delegate.onDestroy();
-    delegate.onRestart();
+        delegate.onPause();
+        delegate.onSaveInstanceState(bundle);
+        delegate.onStop();
+        delegate.onDestroy();
+        delegate.onRestart();
 
-    Mockito.verify(presenter, Mockito.times(detachViewCount)).detachView();
-    if (!expectKeepPresenter) Mockito.verify(presenter, Mockito.times(destroyCount)).destroy();
-  }
+        Mockito.verify(presenter, Mockito.times(detachViewCount)).detachView();
+        if (!expectKeepPresenter) Mockito.verify(presenter, Mockito.times(destroyCount)).destroy();
+    }
 }

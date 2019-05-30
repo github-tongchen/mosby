@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.mosby3.mvp.delegate.FragmentMvpDelegate;
 import com.hannesdorfmann.mosby3.mvp.delegate.FragmentMvpViewStateDelegateImpl;
 import com.hannesdorfmann.mosby3.mvp.delegate.MvpViewStateDelegateCallback;
@@ -27,200 +29,236 @@ import com.hannesdorfmann.mosby3.sample.mail.model.mail.statistics.MailStatistic
  * @author Hannes Dorfmann
  */
 public class StatisticsDialog extends AppCompatDialogFragment implements StatisticsView,
-    MvpViewStateDelegateCallback<StatisticsView, StatisticsPresenter, AuthParcelableDataViewState<MailStatistics, StatisticsView>> {
+        MvpViewStateDelegateCallback<StatisticsView, StatisticsPresenter, AuthParcelableDataViewState<MailStatistics, StatisticsView>> {
 
-  @BindView(R.id.contentView) RecyclerView contentView;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.errorView) TextView errorView;
-  @BindView(R.id.authView) View authView;
+    @BindView(R.id.contentView)
+    RecyclerView contentView;
+    @BindView(R.id.loadingView)
+    View loadingView;
+    @BindView(R.id.errorView)
+    TextView errorView;
+    @BindView(R.id.authView)
+    View authView;
 
-  StatisticsPresenter presenter;
-  AuthParcelableDataViewState<MailStatistics, StatisticsView> viewState;
-  MailStatistics data;
-  StatisticsAdapter adapter;
+    StatisticsPresenter presenter;
+    AuthParcelableDataViewState<MailStatistics, StatisticsView> viewState;
+    MailStatistics data;
+    StatisticsAdapter adapter;
 
-  private FragmentMvpDelegate<StatisticsView, StatisticsPresenter> delegate =
-      new FragmentMvpViewStateDelegateImpl<>(this, this, true, true);
+    private FragmentMvpDelegate<StatisticsView, StatisticsPresenter> delegate =
+            new FragmentMvpViewStateDelegateImpl<>(this, this, true, true);
 
-  //
-  // DELEGATE callback
-  //
+    //
+    // DELEGATE callback
+    //
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    delegate.onCreate(savedInstanceState);
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        delegate.onCreate(savedInstanceState);
+    }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    delegate.onDestroy();
-  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        delegate.onDestroy();
+    }
 
-  @Override public void onPause() {
-    super.onPause();
-    delegate.onPause();
-  }
+    @Override
+    public void onPause() {
+        super.onPause();
+        delegate.onPause();
+    }
 
-  @Override public void onResume() {
-    super.onResume();
-    delegate.onResume();
-  }
+    @Override
+    public void onResume() {
+        super.onResume();
+        delegate.onResume();
+    }
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_statistics, container, false);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_statistics, container, false);
+    }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    delegate.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        delegate.onViewCreated(view, savedInstanceState);
 
-    ButterKnife.bind(this, view);
-    adapter = new StatisticsAdapter(getActivity());
-    contentView.setAdapter(adapter);
-    contentView.setLayoutManager(new LinearLayoutManager(getActivity()));
-  }
+        ButterKnife.bind(this, view);
+        adapter = new StatisticsAdapter(getActivity());
+        contentView.setAdapter(adapter);
+        contentView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    delegate.onDestroyView();
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        delegate.onDestroyView();
+    }
 
-  @Override public void onStart() {
-    super.onStart();
-    delegate.onStart();
-  }
+    @Override
+    public void onStart() {
+        super.onStart();
+        delegate.onStart();
+    }
 
-  @Override public void onStop() {
-    super.onStop();
-    delegate.onStop();
-  }
+    @Override
+    public void onStop() {
+        super.onStop();
+        delegate.onStop();
+    }
 
-  @Override public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    delegate.onAttach(activity);
-  }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        delegate.onAttach(activity);
+    }
 
-  @Override public void onDetach() {
-    super.onDetach();
-    delegate.onDetach();
-  }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        delegate.onDetach();
+    }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    delegate.onActivityCreated(savedInstanceState);
-  }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        delegate.onActivityCreated(savedInstanceState);
+    }
 
-  @Override public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    delegate.onSaveInstanceState(outState);
-  }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        delegate.onSaveInstanceState(outState);
+    }
 
-  //
-  // End delegates
-  //
+    //
+    // End delegates
+    //
 
-  @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    AppCompatDialog dialog = new AppCompatDialog(getActivity(), getTheme());
-    dialog.setTitle(R.string.menu_statistics);
-    return dialog;
-  }
+        AppCompatDialog dialog = new AppCompatDialog(getActivity(), getTheme());
+        dialog.setTitle(R.string.menu_statistics);
+        return dialog;
+    }
 
-  @Override public void showAuthenticationRequired() {
-    contentView.setVisibility(View.GONE);
-    errorView.setVisibility(View.GONE);
-    loadingView.setVisibility(View.GONE);
-    authView.setVisibility(View.VISIBLE);
+    @Override
+    public void showAuthenticationRequired() {
+        contentView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.GONE);
+        authView.setVisibility(View.VISIBLE);
 
-    ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setShowingAuthenticationRequired();
-  }
+        ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setShowingAuthenticationRequired();
+    }
 
-  @Override public void showLoading(boolean pullToRefresh) {
-    contentView.setVisibility(View.GONE);
-    errorView.setVisibility(View.GONE);
-    loadingView.setVisibility(View.VISIBLE);
-    authView.setVisibility(View.GONE);
+    @Override
+    public void showLoading(boolean pullToRefresh) {
+        contentView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+        authView.setVisibility(View.GONE);
 
-    ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowLoading(
-        pullToRefresh);
-  }
+        ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowLoading(
+                pullToRefresh);
+    }
 
-  @Override public void showContent() {
-    contentView.setVisibility(View.VISIBLE);
-    errorView.setVisibility(View.GONE);
-    loadingView.setVisibility(View.GONE);
-    authView.setVisibility(View.GONE);
+    @Override
+    public void showContent() {
+        contentView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.GONE);
+        authView.setVisibility(View.GONE);
 
-    ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowContent(
-        data);
-  }
+        ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowContent(
+                data);
+    }
 
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-    contentView.setVisibility(View.GONE);
-    errorView.setVisibility(View.VISIBLE);
-    loadingView.setVisibility(View.GONE);
-    authView.setVisibility(View.GONE);
-    ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowError(e,
-        pullToRefresh);
-  }
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        contentView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+        loadingView.setVisibility(View.GONE);
+        authView.setVisibility(View.GONE);
+        ((AuthParcelableDataViewState<MailStatistics, StatisticsView>) viewState).setStateShowError(e,
+                pullToRefresh);
+    }
 
-  @Override public void setData(MailStatistics data) {
-    this.data = data;
-    adapter.setItems(data.getMailsCounts());
-    adapter.notifyDataSetChanged();
-  }
+    @Override
+    public void setData(MailStatistics data) {
+        this.data = data;
+        adapter.setItems(data.getMailsCounts());
+        adapter.notifyDataSetChanged();
+    }
 
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadStatistics();
-  }
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadStatistics();
+    }
 
-  @Override public AuthParcelableDataViewState<MailStatistics, StatisticsView> getViewState() {
-    return viewState;
-  }
+    @Override
+    public AuthParcelableDataViewState<MailStatistics, StatisticsView> getViewState() {
+        return viewState;
+    }
 
-  @Override
-  public void setViewState(AuthParcelableDataViewState<MailStatistics, StatisticsView> viewState) {
-    this.viewState = viewState;
-  }
+    @Override
+    public void setViewState(AuthParcelableDataViewState<MailStatistics, StatisticsView> viewState) {
+        this.viewState = viewState;
+    }
 
-  @Override public AuthParcelableDataViewState<MailStatistics, StatisticsView> createViewState() {
-    return new AuthParcelableDataViewState<MailStatistics, StatisticsView>();
-  }
+    @Override
+    public AuthParcelableDataViewState<MailStatistics, StatisticsView> createViewState() {
+        return new AuthParcelableDataViewState<MailStatistics, StatisticsView>();
+    }
 
-  @Override public void setRestoringViewState(boolean restoringViewState) {
-    // Not needed
-  }
+    @Override
+    public void setRestoringViewState(boolean restoringViewState) {
+        // Not needed
+    }
 
-  @Override public boolean isRestoringViewState() {
-    // Not needed
-    return false;
-  }
+    @Override
+    public boolean isRestoringViewState() {
+        // Not needed
+        return false;
+    }
 
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetained) {
-    // Not needed
-  }
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetained) {
+        // Not needed
+    }
 
-  @Override public void onNewViewStateInstance() {
-    loadData(false);
-  }
+    @Override
+    public void onNewViewStateInstance() {
+        loadData(false);
+    }
 
-  @Override public StatisticsPresenter createPresenter() {
-    return DaggerStatisticsComponent.builder()
-        .mailAppComponent(MailApplication.getMailComponents())
-        .build()
-        .presenter();
-  }
+    @Override
+    public StatisticsPresenter createPresenter() {
+        return DaggerStatisticsComponent.builder()
+                .mailAppComponent(MailApplication.getMailComponents())
+                .build()
+                .presenter();
+    }
 
-  @Override public StatisticsPresenter getPresenter() {
-    return presenter;
-  }
+    @Override
+    public StatisticsPresenter getPresenter() {
+        return presenter;
+    }
 
-  @Override public void setPresenter(StatisticsPresenter presenter) {
-    this.presenter = presenter;
-  }
+    @Override
+    public void setPresenter(StatisticsPresenter presenter) {
+        this.presenter = presenter;
+    }
 
-  @Override public StatisticsView getMvpView() {
-    return this;
-  }
+    @Override
+    public StatisticsView getMvpView() {
+        return this;
+    }
 }

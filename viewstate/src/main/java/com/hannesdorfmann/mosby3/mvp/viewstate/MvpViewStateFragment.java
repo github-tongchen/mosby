@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.mvp.viewstate;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
@@ -39,44 +40,51 @@ import com.hannesdorfmann.mosby3.mvp.delegate.MvpViewStateDelegateCallback;
  * @since 1.0.0
  */
 public abstract class MvpViewStateFragment<V extends MvpView, P extends MvpPresenter<V>, VS extends ViewState<V>>
-    extends MvpFragment<V, P> implements MvpViewStateDelegateCallback<V, P, VS> {
+        extends MvpFragment<V, P> implements MvpViewStateDelegateCallback<V, P, VS> {
 
-  /**
-   * The viewstate will be instantiated by calling {@link #createViewState()} in {@link
-   * #onViewCreated(View, Bundle)}. Don't instantiate it by hand.
-   */
-  protected VS viewState;
+    /**
+     * The viewstate will be instantiated by calling {@link #createViewState()} in {@link
+     * #onViewCreated(View, Bundle)}. Don't instantiate it by hand.
+     */
+    protected VS viewState;
 
-  /**
-   * A simple flag that indicates if the restoring ViewState  is in progress right now.
-   */
-  private boolean restoringViewState = false;
+    /**
+     * A simple flag that indicates if the restoring ViewState  is in progress right now.
+     */
+    private boolean restoringViewState = false;
 
-  @Override @NonNull protected FragmentMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new FragmentMvpViewStateDelegateImpl<>(this, this, true, true);
+    @Override
+    @NonNull
+    protected FragmentMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new FragmentMvpViewStateDelegateImpl<>(this, this, true, true);
+        }
+
+        return mvpDelegate;
     }
 
-    return mvpDelegate;
-  }
+    @Override
+    public VS getViewState() {
+        return viewState;
+    }
 
-  @Override public VS getViewState() {
-    return viewState;
-  }
+    @Override
+    public void setViewState(VS viewState) {
+        this.viewState = viewState;
+    }
 
-  @Override public void setViewState(VS viewState) {
-    this.viewState = viewState;
-  }
+    @Override
+    public void setRestoringViewState(boolean restoringViewState) {
+        this.restoringViewState = restoringViewState;
+    }
 
-  @Override public void setRestoringViewState(boolean restoringViewState) {
-    this.restoringViewState = restoringViewState;
-  }
+    @Override
+    public boolean isRestoringViewState() {
+        return restoringViewState;
+    }
 
-  @Override public boolean isRestoringViewState() {
-    return restoringViewState;
-  }
-
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetained) {
-    // not needed. You could override this is subclasses if needed
-  }
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetained) {
+        // not needed. You could override this is subclasses if needed
+    }
 }

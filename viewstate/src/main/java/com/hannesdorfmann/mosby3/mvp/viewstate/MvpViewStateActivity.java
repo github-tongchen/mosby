@@ -38,41 +38,48 @@ import com.hannesdorfmann.mosby3.mvp.delegate.MvpViewStateDelegateCallback;
  * @since 1.0.0
  */
 public abstract class MvpViewStateActivity<V extends MvpView, P extends MvpPresenter<V>, VS extends ViewState<V>>
-    extends MvpActivity<V, P> implements MvpViewStateDelegateCallback<V, P, VS> {
+        extends MvpActivity<V, P> implements MvpViewStateDelegateCallback<V, P, VS> {
 
-  protected VS viewState;
+    protected VS viewState;
 
-  /**
-   * A simple flag that indicates if the restoring ViewState  is in progress right now.
-   */
-  protected boolean restoringViewState = false;
+    /**
+     * A simple flag that indicates if the restoring ViewState  is in progress right now.
+     */
+    protected boolean restoringViewState = false;
 
-  @Override @NonNull protected ActivityMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new ActivityMvpViewStateDelegateImpl<>(this, this, true);
+    @Override
+    @NonNull
+    protected ActivityMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new ActivityMvpViewStateDelegateImpl<>(this, this, true);
+        }
+
+        return mvpDelegate;
     }
 
-    return mvpDelegate;
-  }
+    @Override
+    public VS getViewState() {
+        return viewState;
+    }
 
-  @Override public VS getViewState() {
-    return viewState;
-  }
+    @Override
+    public void setViewState(VS viewState) {
 
-  @Override public void setViewState(VS viewState) {
+        this.viewState = viewState;
+    }
 
-    this.viewState = viewState;
-  }
+    @Override
+    public void setRestoringViewState(boolean restoringViewState) {
+        this.restoringViewState = restoringViewState;
+    }
 
-  @Override public void setRestoringViewState(boolean restoringViewState) {
-    this.restoringViewState = restoringViewState;
-  }
+    @Override
+    public boolean isRestoringViewState() {
+        return restoringViewState;
+    }
 
-  @Override public boolean isRestoringViewState() {
-    return restoringViewState;
-  }
-
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetained) {
-    // not needed. You could override this is subclasses if needed
-  }
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetained) {
+        // not needed. You could override this is subclasses if needed
+    }
 }

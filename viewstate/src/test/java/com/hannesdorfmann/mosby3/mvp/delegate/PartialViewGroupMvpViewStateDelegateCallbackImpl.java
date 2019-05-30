@@ -19,34 +19,41 @@ package com.hannesdorfmann.mosby3.mvp.delegate;
 
 import android.os.Parcelable;
 import android.view.AbsSavedState;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
+
 import org.mockito.Mockito;
 
 public abstract class PartialViewGroupMvpViewStateDelegateCallbackImpl implements
-    ViewGroupMvpViewStateDelegateCallback<MvpView, MvpPresenter<MvpView>, ViewState<MvpView>> {
+        ViewGroupMvpViewStateDelegateCallback<MvpView, MvpPresenter<MvpView>, ViewState<MvpView>> {
 
-  MvpPresenter<MvpView> presenter;
-  ViewState<MvpView> viewState;
+    MvpPresenter<MvpView> presenter;
+    ViewState<MvpView> viewState;
 
-  @Override public MvpPresenter<MvpView> getPresenter() {
-    return presenter;
-  }
+    @Override
+    public MvpPresenter<MvpView> getPresenter() {
+        return presenter;
+    }
 
-  @Override public void setPresenter(MvpPresenter<MvpView> presenter) {
-    this.presenter = presenter;
-  }
+    @Override
+    public void setPresenter(MvpPresenter<MvpView> presenter) {
+        this.presenter = presenter;
+    }
 
-  @Override public ViewState<MvpView> getViewState() {
-    return viewState;
-  }
+    @Override
+    public ViewState<MvpView> getViewState() {
+        return viewState;
+    }
 
-  @Override public void setViewState(ViewState<MvpView> viewState) {
-    this.viewState = viewState;
-  }
+    @Override
+    public void setViewState(ViewState<MvpView> viewState) {
+        this.viewState = viewState;
+    }
 
-  @Override public Parcelable superOnSaveInstanceState() {
-    return Mockito.mock(AbsSavedState.class);
-  }
+    @Override
+    public Parcelable superOnSaveInstanceState() {
+        return Mockito.mock(AbsSavedState.class);
+    }
 }

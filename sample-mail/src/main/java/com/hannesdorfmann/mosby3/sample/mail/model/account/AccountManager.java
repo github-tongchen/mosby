@@ -22,9 +22,9 @@ import rx.Observable;
  * @author Hannes Dorfmann
  */
 public interface AccountManager {
-  Observable<Account> doLogin(AuthCredentials credentials);
+    Observable<Account> doLogin(AuthCredentials credentials);
 
-  Account getCurrentAccount();
+    Account getCurrentAccount();
 
-  boolean isUserAuthenticated();
+    boolean isUserAuthenticated();
 }

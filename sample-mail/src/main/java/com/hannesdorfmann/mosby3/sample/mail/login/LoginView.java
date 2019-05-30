@@ -23,11 +23,11 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  */
 public interface LoginView extends MvpView {
 
-  void showLoginForm();
+    void showLoginForm();
 
-  void showError();
+    void showError();
 
-  void showLoading();
+    void showLoading();
 
-  void loginSuccessful();
+    void loginSuccessful();
 }

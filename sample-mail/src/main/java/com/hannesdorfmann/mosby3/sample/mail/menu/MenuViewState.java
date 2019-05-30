@@ -17,9 +17,11 @@
 package com.hannesdorfmann.mosby3.sample.mail.menu;
 
 import android.os.Parcel;
+
 import com.hannesdorfmann.mosby3.sample.mail.base.view.viewstate.AuthCastedArrayListViewState;
 import com.hannesdorfmann.mosby3.sample.mail.model.account.Account;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
+
 import java.util.List;
 
 /**
@@ -28,34 +30,38 @@ import java.util.List;
 @SuppressWarnings("ParcelCreator")
 public class MenuViewState extends AuthCastedArrayListViewState<List<Label>, MenuView> {
 
-  private Account account;
+    private Account account;
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeParcelable(account, flags);
-  }
-
-  @Override protected void readFromParcel(Parcel source) {
-    super.readFromParcel(source);
-    account = source.readParcelable(Account.class.getClassLoader());
-  }
-
-  @Override public void apply(MenuView view, boolean retained) {
-    super.apply(view, retained);
-
-    if (account != null) {
-      view.setAccount(account);
-    } else {
-      view.showAuthenticationRequired();
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(account, flags);
     }
-  }
 
-  @Override public void setShowingAuthenticationRequired() {
-    super.setShowingAuthenticationRequired();
-    account = null;
-  }
+    @Override
+    protected void readFromParcel(Parcel source) {
+        super.readFromParcel(source);
+        account = source.readParcelable(Account.class.getClassLoader());
+    }
 
-  public void setAccount(Account account) {
-    this.account = account;
-  }
+    @Override
+    public void apply(MenuView view, boolean retained) {
+        super.apply(view, retained);
+
+        if (account != null) {
+            view.setAccount(account);
+        } else {
+            view.showAuthenticationRequired();
+        }
+    }
+
+    @Override
+    public void setShowingAuthenticationRequired() {
+        super.setShowingAuthenticationRequired();
+        account = null;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

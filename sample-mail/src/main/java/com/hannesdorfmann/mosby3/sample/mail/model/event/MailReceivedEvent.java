@@ -7,13 +7,13 @@ import com.hannesdorfmann.mosby3.sample.mail.model.mail.Mail;
  */
 public class MailReceivedEvent {
 
-  private Mail mail;
+    private Mail mail;
 
-  public MailReceivedEvent(Mail mail) {
-    this.mail = mail;
-  }
+    public MailReceivedEvent(Mail mail) {
+        this.mail = mail;
+    }
 
-  public Mail getMail() {
-    return mail;
-  }
+    public Mail getMail() {
+        return mail;
+    }
 }

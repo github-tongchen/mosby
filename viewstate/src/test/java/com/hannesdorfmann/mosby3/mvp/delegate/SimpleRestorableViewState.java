@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.mvp.delegate;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 
@@ -29,15 +30,18 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
  */
 public class SimpleRestorableViewState implements RestorableViewState<MvpView> {
 
-  @Override public void saveInstanceState(@NonNull Bundle out) {
+    @Override
+    public void saveInstanceState(@NonNull Bundle out) {
 
-  }
+    }
 
-  @Override public void apply(MvpView view, boolean retained) {
+    @Override
+    public void apply(MvpView view, boolean retained) {
 
-  }
+    }
 
-  @Override public RestorableViewState<MvpView> restoreInstanceState(Bundle in) {
-    return this;
-  }
+    @Override
+    public RestorableViewState<MvpView> restoreInstanceState(Bundle in) {
+        return this;
+    }
 }

@@ -21,6 +21,7 @@ import com.hannesdorfmann.mosby3.sample.mail.model.account.NotAuthenticatedExcep
 import com.hannesdorfmann.mosby3.sample.mail.model.event.LoginSuccessfulEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.event.NotAuthenticatedEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailProvider;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -28,41 +29,44 @@ import de.greenrobot.event.EventBus;
  */
 public class BaseRxAuthPresenter<V extends AuthView<M>, M> extends BaseRxLcePresenter<V, M> {
 
-  protected EventBus eventBus;
-  protected MailProvider mailProvider;
+    protected EventBus eventBus;
+    protected MailProvider mailProvider;
 
-  public BaseRxAuthPresenter(MailProvider mailProvider, EventBus eventBus) {
-    this.eventBus = eventBus;
-    this.mailProvider = mailProvider;
-  }
-
-  @Override protected void onError(Throwable e, boolean pullToRefresh) {
-    if (e instanceof NotAuthenticatedException) {
-      eventBus.post(new NotAuthenticatedEvent());
-    } else {
-      super.onError(e, pullToRefresh);
+    public BaseRxAuthPresenter(MailProvider mailProvider, EventBus eventBus) {
+        this.eventBus = eventBus;
+        this.mailProvider = mailProvider;
     }
-  }
 
-  public void onEventMainThread(NotAuthenticatedEvent event) {
-    if (isViewAttached()) {
-      getView().showAuthenticationRequired();
+    @Override
+    protected void onError(Throwable e, boolean pullToRefresh) {
+        if (e instanceof NotAuthenticatedException) {
+            eventBus.post(new NotAuthenticatedEvent());
+        } else {
+            super.onError(e, pullToRefresh);
+        }
     }
-  }
 
-  public void onEventMainThread(LoginSuccessfulEvent event) {
-    if (isViewAttached()) {
-      getView().loadData(false);
+    public void onEventMainThread(NotAuthenticatedEvent event) {
+        if (isViewAttached()) {
+            getView().showAuthenticationRequired();
+        }
     }
-  }
 
-  @Override public void attachView(V view) {
-    super.attachView(view);
-    eventBus.register(this);
-  }
+    public void onEventMainThread(LoginSuccessfulEvent event) {
+        if (isViewAttached()) {
+            getView().loadData(false);
+        }
+    }
 
-  @Override public void detachView(boolean retainInstance) {
-    super.detachView(retainInstance);
-    eventBus.unregister(this);
-  }
+    @Override
+    public void attachView(V view) {
+        super.attachView(view);
+        eventBus.register(this);
+    }
+
+    @Override
+    public void detachView(boolean retainInstance) {
+        super.detachView(retainInstance);
+        eventBus.unregister(this);
+    }
 }

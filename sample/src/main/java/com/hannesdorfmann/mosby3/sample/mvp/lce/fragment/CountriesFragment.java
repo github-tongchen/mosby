@@ -39,77 +39,90 @@ import com.hannesdorfmann.mosby3.sample.mvp.CountriesPresenter;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesView;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.SimpleCountriesPresenter;
 import com.hannesdorfmann.mosby3.sample.mvp.model.Country;
+
 import java.util.List;
 
 /**
  * @author Hannes Dorfmann
  */
 public class CountriesFragment
-    extends MvpLceFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
-    implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
+        extends MvpLceFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
+        implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
 
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-  private Unbinder unbinder;
-  CountriesAdapter adapter;
+    private Unbinder unbinder;
+    CountriesAdapter adapter;
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    SampleApplication.getRefWatcher(getActivity()).watch(this);
-  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SampleApplication.getRefWatcher(getActivity()).watch(this);
+    }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstance) {
-    super.onViewCreated(view, savedInstance);
-    unbinder = ButterKnife.bind(this, view);
-    // Setup contentView == SwipeRefreshView
-    contentView.setOnRefreshListener(this);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+        unbinder = ButterKnife.bind(this, view);
+        // Setup contentView == SwipeRefreshView
+        contentView.setOnRefreshListener(this);
 
-    // Setup recycler view
-    adapter = new CountriesAdapter(getActivity());
-    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    recyclerView.setAdapter(adapter);
-    loadData(false);
-  }
+        // Setup recycler view
+        adapter = new CountriesAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        loadData(false);
+    }
 
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadCountries(pullToRefresh);
-  }
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadCountries(pullToRefresh);
+    }
 
-  @Override protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-    return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
-  }
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
+    }
 
-  @Override public CountriesPresenter createPresenter() {
-    return new SimpleCountriesPresenter();
-  }
+    @Override
+    public CountriesPresenter createPresenter() {
+        return new SimpleCountriesPresenter();
+    }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.countries_list, container, false);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.countries_list, container, false);
+    }
 
-  @Override public void setData(List<Country> data) {
-    adapter.setCountries(data);
-    adapter.notifyDataSetChanged();
-  }
+    @Override
+    public void setData(List<Country> data) {
+        adapter.setCountries(data);
+        adapter.notifyDataSetChanged();
+    }
 
-  @Override public void onRefresh() {
-    loadData(true);
-  }
+    @Override
+    public void onRefresh() {
+        loadData(true);
+    }
 
-  @Override public void showContent() {
-    super.showContent();
-    contentView.setRefreshing(false);
-  }
+    @Override
+    public void showContent() {
+        super.showContent();
+        contentView.setRefreshing(false);
+    }
 
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-    super.showError(e, pullToRefresh);
-    contentView.setRefreshing(false);
-  }
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        super.showError(e, pullToRefresh);
+        contentView.setRefreshing(false);
+    }
 }

@@ -19,6 +19,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 import com.hannesdorfmann.mosby3.mvp.delegate.ViewGroupMvpDelegate;
@@ -34,56 +35,62 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
  * @since 1.1.0
  */
 public abstract class MvpViewStateRelativeLayout<V extends MvpView, P extends MvpPresenter<V>, VS extends ViewState<V>>
-    extends MvpRelativeLayout<V, P> implements ViewGroupMvpViewStateDelegateCallback<V, P, VS> {
+        extends MvpRelativeLayout<V, P> implements ViewGroupMvpViewStateDelegateCallback<V, P, VS> {
 
-  private boolean restoringViewState = false;
-  protected VS viewState;
+    private boolean restoringViewState = false;
+    protected VS viewState;
 
-  public MvpViewStateRelativeLayout(Context context) {
-    super(context);
-  }
-
-  public MvpViewStateRelativeLayout(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
-  public MvpViewStateRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  @TargetApi(21)
-  public MvpViewStateRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-  }
-
-  @Override @NonNull
-  protected ViewGroupMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new ViewGroupMvpViewStateDelegateImpl<>(this, this, true);
+    public MvpViewStateRelativeLayout(Context context) {
+        super(context);
     }
 
-    return mvpDelegate;
-  }
+    public MvpViewStateRelativeLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  @Override public VS getViewState() {
-    return viewState;
-  }
+    public MvpViewStateRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-  @Override public void setViewState(VS viewState) {
-    this.viewState = viewState;
-  }
+    @TargetApi(21)
+    public MvpViewStateRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                      int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
 
-  @Override public void setRestoringViewState(boolean retstoringViewState) {
-    this.restoringViewState = retstoringViewState;
-  }
+    @Override
+    @NonNull
+    protected ViewGroupMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new ViewGroupMvpViewStateDelegateImpl<>(this, this, true);
+        }
 
-  @Override public boolean isRestoringViewState() {
-    return restoringViewState;
-  }
+        return mvpDelegate;
+    }
 
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetained) {
-    // can be overridden in subclass
-  }
+    @Override
+    public VS getViewState() {
+        return viewState;
+    }
+
+    @Override
+    public void setViewState(VS viewState) {
+        this.viewState = viewState;
+    }
+
+    @Override
+    public void setRestoringViewState(boolean retstoringViewState) {
+        this.restoringViewState = retstoringViewState;
+    }
+
+    @Override
+    public boolean isRestoringViewState() {
+        return restoringViewState;
+    }
+
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetained) {
+        // can be overridden in subclass
+    }
 
 }

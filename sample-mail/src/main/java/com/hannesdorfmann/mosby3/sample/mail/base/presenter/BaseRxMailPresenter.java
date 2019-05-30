@@ -22,8 +22,11 @@ import com.hannesdorfmann.mosby3.sample.mail.model.event.MailStaredEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.event.MailUnstaredEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Mail;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailProvider;
+
 import de.greenrobot.event.EventBus;
+
 import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,75 +34,80 @@ import rx.schedulers.Schedulers;
 /**
  * Base Presenter implementation that already handles and listen
  * <ul>
- *   <li>Star a mail</li>
- *   <li>Unstar a mail</li>
- *   <li>mark mail as read</li>
+ * <li>Star a mail</li>
+ * <li>Unstar a mail</li>
+ * <li>mark mail as read</li>
  * </ul>
+ *
  * @author Hannes Dorfmann
  */
 public class BaseRxMailPresenter<V extends BaseMailView<M>, M>
-    extends BaseRxAuthPresenter<V, M> {
+        extends BaseRxAuthPresenter<V, M> {
 
-  @Inject public BaseRxMailPresenter(MailProvider mailProvider, EventBus eventBus) {
-    super(mailProvider, eventBus);
-  }
-
-  public void starMail(final Mail mail, final boolean star) {
-
-    // optimistic propagation
-    if (star) {
-      eventBus.post(new MailStaredEvent(mail.getId()));
-    } else {
-      eventBus.post(new MailUnstaredEvent(mail.getId()));
+    @Inject
+    public BaseRxMailPresenter(MailProvider mailProvider, EventBus eventBus) {
+        super(mailProvider, eventBus);
     }
 
-    mailProvider.starMail(mail.getId(), star)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<Mail>() {
-          @Override public void onCompleted() {
-          }
+    public void starMail(final Mail mail, final boolean star) {
 
-          @Override public void onError(Throwable e) {
-            // Oops, something went wrong, "undo"
-            if (star) {
-              eventBus.post(new MailUnstaredEvent(mail.getId()));
-            } else {
-              eventBus.post(new MailStaredEvent(mail.getId()));
-            }
+        // optimistic propagation
+        if (star) {
+            eventBus.post(new MailStaredEvent(mail.getId()));
+        } else {
+            eventBus.post(new MailUnstaredEvent(mail.getId()));
+        }
 
-            if (isViewAttached()) {
-              if (star) {
-                getView().showStaringFailed(mail);
-              } else {
-                getView().showUnstaringFailed(mail);
-              }
-            }
-          }
+        mailProvider.starMail(mail.getId(), star)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Mail>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-          @Override public void onNext(Mail mail) {
-          }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        // Oops, something went wrong, "undo"
+                        if (star) {
+                            eventBus.post(new MailUnstaredEvent(mail.getId()));
+                        } else {
+                            eventBus.post(new MailStaredEvent(mail.getId()));
+                        }
 
-    // Note: that we don't cancel this operation in detachView().
-    // We want to ensure that this operation finishes
-  }
+                        if (isViewAttached()) {
+                            if (star) {
+                                getView().showStaringFailed(mail);
+                            } else {
+                                getView().showUnstaringFailed(mail);
+                            }
+                        }
+                    }
 
-  public void onEventMainThread(MailStaredEvent event) {
-    if (isViewAttached()) {
-      getView().markMailAsStared(event.getMailId());
+                    @Override
+                    public void onNext(Mail mail) {
+                    }
+                });
+
+        // Note: that we don't cancel this operation in detachView().
+        // We want to ensure that this operation finishes
     }
-  }
 
-  public void onEventMainThread(MailUnstaredEvent event) {
-    if (isViewAttached()) {
-      getView().markMailAsUnstared(event.getMailId());
+    public void onEventMainThread(MailStaredEvent event) {
+        if (isViewAttached()) {
+            getView().markMailAsStared(event.getMailId());
+        }
     }
-  }
 
-  public void onEventMainThread(MailReadEvent event) {
-    if (isViewAttached()) {
-      getView().markMailAsRead(event.getMail(), event.isRead());
+    public void onEventMainThread(MailUnstaredEvent event) {
+        if (isViewAttached()) {
+            getView().markMailAsUnstared(event.getMailId());
+        }
     }
-  }
+
+    public void onEventMainThread(MailReadEvent event) {
+        if (isViewAttached()) {
+            getView().markMailAsRead(event.getMail(), event.isRead());
+        }
+    }
 }

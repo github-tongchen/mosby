@@ -18,10 +18,12 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.AbsParcelableLceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,44 +45,48 @@ import java.util.List;
  */
 @Deprecated
 public class ArrayListLceViewState<D extends ArrayList<? extends Parcelable>, V extends MvpLceView<D>>
-    extends AbsParcelableLceViewState<D, V> {
+        extends AbsParcelableLceViewState<D, V> {
 
-  public static final Parcelable.Creator<ArrayListLceViewState> CREATOR =
-      new Parcelable.Creator<ArrayListLceViewState>() {
-        @Override public ArrayListLceViewState createFromParcel(Parcel source) {
-          return new ArrayListLceViewState(source);
-        }
+    public static final Parcelable.Creator<ArrayListLceViewState> CREATOR =
+            new Parcelable.Creator<ArrayListLceViewState>() {
+                @Override
+                public ArrayListLceViewState createFromParcel(Parcel source) {
+                    return new ArrayListLceViewState(source);
+                }
 
-        @Override public ArrayListLceViewState[] newArray(int size) {
-          return new ArrayListLceViewState[size];
-        }
-      };
+                @Override
+                public ArrayListLceViewState[] newArray(int size) {
+                    return new ArrayListLceViewState[size];
+                }
+            };
 
-  public ArrayListLceViewState() {
-  }
+    public ArrayListLceViewState() {
+    }
 
-  private ArrayListLceViewState(Parcel source) {
-    readFromParcel(source);
-  }
+    private ArrayListLceViewState(Parcel source) {
+        readFromParcel(source);
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 
-    dest.writeList(loadedData);
+        dest.writeList(loadedData);
 
-    super.writeToParcel(dest, flags);
-  }
+        super.writeToParcel(dest, flags);
+    }
 
-  @Override protected void readFromParcel(Parcel source) {
+    @Override
+    protected void readFromParcel(Parcel source) {
 
-    loadedData = (D) source.readArrayList(getClassLoader());
+        loadedData = (D) source.readArrayList(getClassLoader());
 
-    super.readFromParcel(source);
-  }
+        super.readFromParcel(source);
+    }
 
-  /**
-   * The class loader used for deserializing the list of parcelable items
-   */
-  protected ClassLoader getClassLoader() {
-    return getClass().getClassLoader();
-  }
+    /**
+     * The class loader used for deserializing the list of parcelable items
+     */
+    protected ClassLoader getClassLoader() {
+        return getClass().getClassLoader();
+    }
 }

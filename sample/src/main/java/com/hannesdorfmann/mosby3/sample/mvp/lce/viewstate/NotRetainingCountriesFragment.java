@@ -25,9 +25,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.MvpLceViewStateFragment;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
@@ -39,6 +41,7 @@ import com.hannesdorfmann.mosby3.sample.mvp.CountriesPresenter;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesView;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.SimpleCountriesPresenter;
 import com.hannesdorfmann.mosby3.sample.mvp.model.Country;
+
 import java.util.List;
 
 /**
@@ -48,127 +51,149 @@ import java.util.List;
  * @author Hannes Dorfmann
  */
 public class NotRetainingCountriesFragment extends
-    MvpLceViewStateFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
-    implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
+        MvpLceViewStateFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
+        implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
 
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-  private Unbinder unbinder;
-  CountriesAdapter adapter;
+    private Unbinder unbinder;
+    CountriesAdapter adapter;
 
-  @Override public LceViewState<List<Country>, CountriesView> createViewState() {
-    Log.d(getTag(), "createViewState()");
-    return new CastedArrayListLceViewState<>();
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
-  }
-
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.countries_list, container, false);
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstance) {
-    super.onViewCreated(view, savedInstance);
-    unbinder = ButterKnife.bind(this, view);
-
-    // Setup contentView == SwipeRefreshView
-    contentView.setOnRefreshListener(this);
-
-    // Setup recycler view
-    adapter = new CountriesAdapter(getActivity());
-    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    recyclerView.setAdapter(adapter);
-  }
-
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadCountries(pullToRefresh);
-  }
-
-  @Override protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-    return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
-  }
-
-  @Override public CountriesPresenter createPresenter() {
-    Log.d(getTag(), "createPresenter()");
-    return new SimpleCountriesPresenter();
-  }
-
-  @Override public void setData(List<Country> data) {
-    Log.d(getTag(), "setData ");
-    adapter.setCountries(data);
-    adapter.notifyDataSetChanged();
-  }
-
-  @Override public void onRefresh() {
-    loadData(true);
-  }
-
-  @Override public void showContent() {
-    Log.d(getTag(), "showContent");
-    super.showContent();
-    contentView.post(new Runnable() {
-      @Override public void run() {
-        // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
-        contentView.setRefreshing(false);
-      }
-    });
-  }
-
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-
-    Log.d(getTag(), "showError " + pullToRefresh);
-    super.showError(e, pullToRefresh);
-    contentView.post(new Runnable() {
-      @Override public void run() {
-        // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
-        contentView.setRefreshing(false);
-      }
-    });
-  }
-
-  @Override public void showLoading(boolean pullToRefresh) {
-    Log.d(getTag(), "showLoading " + pullToRefresh);
-    super.showLoading(pullToRefresh);
-    if (pullToRefresh && !contentView.isRefreshing()) {
-      // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
-      contentView.post(new Runnable() {
-        @Override public void run() {
-          contentView.setRefreshing(true);
-        }
-      });
+    @Override
+    public LceViewState<List<Country>, CountriesView> createViewState() {
+        Log.d(getTag(), "createViewState()");
+        return new CastedArrayListLceViewState<>();
     }
-  }
 
-  @Override public List<Country> getData() {
-    return adapter == null ? null : adapter.getCountries();
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    SampleApplication.getRefWatcher(getActivity()).watch(this);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.countries_list, container, false);
+    }
 
-  @Override public void onNewViewStateInstance() {
-    Log.d(getTag(), "onNewViewStateInstance");
-    super.onNewViewStateInstance();
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+        unbinder = ButterKnife.bind(this, view);
 
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetainedInMemory) {
-    Log.d(getTag(), "onViewStateInstanceRestored " + instanceStateRetainedInMemory);
-    super.onViewStateInstanceRestored(instanceStateRetainedInMemory);
-  }
+        // Setup contentView == SwipeRefreshView
+        contentView.setOnRefreshListener(this);
 
-  @Override public void setRestoringViewState(boolean restoringViewState) {
-    super.setRestoringViewState(restoringViewState);
-    Log.d(getTag(), "setRestoringViewState " + restoringViewState);
-  }
+        // Setup recycler view
+        adapter = new CountriesAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+    }
 
-  @Override public String toString() {
-    return super.toString() + " " + getTag();
-  }
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadCountries(pullToRefresh);
+    }
+
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
+    }
+
+    @Override
+    public CountriesPresenter createPresenter() {
+        Log.d(getTag(), "createPresenter()");
+        return new SimpleCountriesPresenter();
+    }
+
+    @Override
+    public void setData(List<Country> data) {
+        Log.d(getTag(), "setData ");
+        adapter.setCountries(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData(true);
+    }
+
+    @Override
+    public void showContent() {
+        Log.d(getTag(), "showContent");
+        super.showContent();
+        contentView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
+                contentView.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+
+        Log.d(getTag(), "showError " + pullToRefresh);
+        super.showError(e, pullToRefresh);
+        contentView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
+                contentView.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void showLoading(boolean pullToRefresh) {
+        Log.d(getTag(), "showLoading " + pullToRefresh);
+        super.showLoading(pullToRefresh);
+        if (pullToRefresh && !contentView.isRefreshing()) {
+            // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
+            contentView.post(new Runnable() {
+                @Override
+                public void run() {
+                    contentView.setRefreshing(true);
+                }
+            });
+        }
+    }
+
+    @Override
+    public List<Country> getData() {
+        return adapter == null ? null : adapter.getCountries();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SampleApplication.getRefWatcher(getActivity()).watch(this);
+    }
+
+    @Override
+    public void onNewViewStateInstance() {
+        Log.d(getTag(), "onNewViewStateInstance");
+        super.onNewViewStateInstance();
+    }
+
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetainedInMemory) {
+        Log.d(getTag(), "onViewStateInstanceRestored " + instanceStateRetainedInMemory);
+        super.onViewStateInstanceRestored(instanceStateRetainedInMemory);
+    }
+
+    @Override
+    public void setRestoringViewState(boolean restoringViewState) {
+        super.setRestoringViewState(restoringViewState);
+        Log.d(getTag(), "setRestoringViewState " + restoringViewState);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + getTag();
+    }
 }

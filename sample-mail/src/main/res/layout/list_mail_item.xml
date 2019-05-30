@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Hannes Dorfmann.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,20 +22,16 @@
     android:paddingLeft="@dimen/mail_item_padding_left_right"
     android:paddingRight="@dimen/mail_item_padding_left_right"
     android:paddingTop="@dimen/mail_item_padding_top_bottom"
-    android:paddingBottom="@dimen/mail_item_padding_top_bottom"
-    >
+    android:paddingBottom="@dimen/mail_item_padding_top_bottom">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/senderPic"
         android:layout_width="@dimen/mail_sender_pic_width_height"
         android:layout_height="@dimen/mail_sender_pic_width_height"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         tools:src="@drawable/ted"
-        android:layout_marginRight="@dimen/mail_item_padding_left_right"
-        />
-
+        android:layout_marginRight="@dimen/mail_item_padding_left_right" />
 
 
     <TextView
@@ -49,9 +44,8 @@
         android:layout_marginLeft="8dp"
         android:textSize="12sp"
         android:textColor="@color/secondary_text"
-        tools:text="25. Apr."
-        />
-    
+        tools:text="25. Apr." />
+
     <com.hannesdorfmann.mosby3.sample.mail.ui.view.StarView
         android:id="@+id/starButton"
         android:layout_width="26dp"
@@ -61,8 +55,7 @@
         android:layout_marginTop="6dp"
         android:layout_below="@+id/date"
         android:src="@drawable/ic_star"
-        tools:backgroud="@color/accent"
-        />
+        tools:backgroud="@color/accent" />
 
 
     <TextView
@@ -78,8 +71,7 @@
         android:layout_marginBottom="2dp"
         android:ellipsize="end"
         tools:text="Subject Subject Subject"
-        android:transitionName="@string/shared_mail_subject"
-        />
+        android:transitionName="@string/shared_mail_subject" />
 
 
     <TextView
@@ -92,9 +84,7 @@
         android:layout_toRightOf="@+id/senderPic"
         android:layout_marginRight="60dp"
         android:maxLines="2"
-        tools:text="Sender Name - "
-        />
-
+        tools:text="Sender Name - " />
 
 
 </RelativeLayout>

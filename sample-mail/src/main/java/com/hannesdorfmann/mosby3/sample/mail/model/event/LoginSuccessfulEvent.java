@@ -25,13 +25,13 @@ import com.hannesdorfmann.mosby3.sample.mail.model.account.Account;
  */
 public class LoginSuccessfulEvent {
 
-  private Account account;
+    private Account account;
 
-  public LoginSuccessfulEvent(Account account) {
-    this.account = account;
-  }
+    public LoginSuccessfulEvent(Account account) {
+        this.account = account;
+    }
 
-  public Account getAccount() {
-    return account;
-  }
+    public Account getAccount() {
+        return account;
+    }
 }

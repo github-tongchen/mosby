@@ -5,20 +5,19 @@
     tools:context="com.hannesdorfmann.mosby3.sample.mvp.lce.activity.CountriesActivity">
 
 
-  <include layout="@layout/loading_view" />
-  <include layout="@layout/error_view" />
+    <include layout="@layout/loading_view" />
 
-  <android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/contentView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    <include layout="@layout/error_view" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

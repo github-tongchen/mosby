@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.hannesdorfmann.mosby3.sample.R;
 import com.hannesdorfmann.mosby3.sample.SampleApplication;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.NotRetainingCountriesFragment;
@@ -32,28 +33,31 @@ import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.NotRetainingCountriesF
  */
 public class NestedFragment extends Fragment {
 
-  private final String NESTED_TAG = "nestedFrag";
+    private final String NESTED_TAG = "nestedFrag";
 
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_nested_container, container, false);
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-
-    Fragment nestedFragment = getChildFragmentManager().findFragmentByTag(NESTED_TAG);
-    if (nestedFragment == null) {
-      getChildFragmentManager().beginTransaction()
-          .replace(R.id.nestedFragmentContainer, new NotRetainingCountriesFragment(), NESTED_TAG)
-          .commit();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_nested_container, container, false);
     }
-  }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    SampleApplication.getRefWatcher(getActivity()).watch(this);
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Fragment nestedFragment = getChildFragmentManager().findFragmentByTag(NESTED_TAG);
+        if (nestedFragment == null) {
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.nestedFragmentContainer, new NotRetainingCountriesFragment(), NESTED_TAG)
+                    .commit();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SampleApplication.getRefWatcher(getActivity()).watch(this);
+    }
 }

@@ -8,7 +8,7 @@ import dagger.Component;
 
 
 @Component(
-    modules = MailModule.class
+        modules = MailModule.class
 )
 public interface MailAppComponent {
 }

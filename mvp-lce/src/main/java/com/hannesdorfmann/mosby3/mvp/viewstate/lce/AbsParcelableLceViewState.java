@@ -18,6 +18,8 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce;
 
 import android.os.Bundle;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
+
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 
@@ -38,58 +40,62 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
  * @since 1.0.0
  */
 public abstract class AbsParcelableLceViewState<D, V extends MvpLceView<D>>
-    extends AbsLceViewState<D, V> implements ParcelableLceViewState<D, V> {
+        extends AbsLceViewState<D, V> implements ParcelableLceViewState<D, V> {
 
-  public static final String KEY_BUNDLE_VIEW_STATE =
-      "com.hannesdorfmann.mosby.mvp.viewstate.ViewState.bundlekey";
+    public static final String KEY_BUNDLE_VIEW_STATE =
+            "com.hannesdorfmann.mosby.mvp.viewstate.ViewState.bundlekey";
 
-  @Override public void saveInstanceState(Bundle out) {
-    out.putParcelable(KEY_BUNDLE_VIEW_STATE, this);
-  }
-
-  @Override public AbsParcelableLceViewState<D, V> restoreInstanceState(Bundle in) {
-    if (in == null) {
-      return null;
+    @Override
+    public void saveInstanceState(@NonNull Bundle out) {
+        out.putParcelable(KEY_BUNDLE_VIEW_STATE, this);
     }
 
-    // Workaround to solve class loader problem.
-    // But it returns a copy of the view state and not this viewstate. However, that's ok!
-    return (AbsParcelableLceViewState<D, V>) in.getParcelable(KEY_BUNDLE_VIEW_STATE);
-  }
+    @Override
+    public AbsParcelableLceViewState<D, V> restoreInstanceState(Bundle in) {
+        if (in == null) {
+            return null;
+        }
 
-  @Override public int describeContents() {
-    return 0;
-  }
+        // Workaround to solve class loader problem.
+        // But it returns a copy of the view state and not this viewstate. However, that's ok!
+        return (AbsParcelableLceViewState<D, V>) in.getParcelable(KEY_BUNDLE_VIEW_STATE);
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    dest.writeInt(currentViewState);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 
-    // PullToRefresh
-    writeBoolean(dest, pullToRefresh);
+        dest.writeInt(currentViewState);
 
-    // write exception
-    dest.writeSerializable(exception);
+        // PullToRefresh
+        writeBoolean(dest, pullToRefresh);
 
-    // Content will be written in the subclasses
-  }
+        // write exception
+        dest.writeSerializable(exception);
 
-  protected void readFromParcel(Parcel in) {
-    currentViewState = in.readInt();
+        // Content will be written in the subclasses
+    }
 
-    // Pull To Refresh
-    pullToRefresh = readBoolean(in);
+    protected void readFromParcel(Parcel in) {
+        currentViewState = in.readInt();
 
-    exception = (Throwable) in.readSerializable();
+        // Pull To Refresh
+        pullToRefresh = readBoolean(in);
 
-    // content will be read in subclass
-  }
+        exception = (Throwable) in.readSerializable();
 
-  protected void writeBoolean(Parcel dest, boolean b) {
-    dest.writeByte((byte) (b ? 1 : 0));
-  }
+        // content will be read in subclass
+    }
 
-  protected boolean readBoolean(Parcel p) {
-    return p.readByte() == (byte) 1;
-  }
+    protected void writeBoolean(Parcel dest, boolean b) {
+        dest.writeByte((byte) (b ? 1 : 0));
+    }
+
+    protected boolean readBoolean(Parcel p) {
+        return p.readByte() == (byte) 1;
+    }
 }

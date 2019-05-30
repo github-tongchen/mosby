@@ -1,10 +1,12 @@
 package com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate;
 
 import android.os.Bundle;
+
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.RetainingLceViewState;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesView;
 import com.hannesdorfmann.mosby3.sample.mvp.model.Country;
+
 import java.util.List;
 
 /**
@@ -12,11 +14,13 @@ import java.util.List;
  */
 public class RetainingCountriesActivity extends NotRetainingCountriesActivity {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-  @Override public LceViewState<List<Country>, CountriesView> createViewState() {
-    return new RetainingLceViewState<>();
-  }
+    @Override
+    public LceViewState<List<Country>, CountriesView> createViewState() {
+        return new RetainingLceViewState<>();
+    }
 }

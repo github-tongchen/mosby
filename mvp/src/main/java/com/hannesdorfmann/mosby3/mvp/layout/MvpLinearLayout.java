@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 import com.hannesdorfmann.mosby3.mvp.delegate.ViewGroupDelegateCallback;
@@ -35,95 +36,108 @@ import com.hannesdorfmann.mosby3.mvp.delegate.ViewGroupMvpDelegateImpl;
  * @since 1.1
  */
 public abstract class MvpLinearLayout<V extends MvpView, P extends MvpPresenter<V>>
-    extends LinearLayout implements MvpView, ViewGroupDelegateCallback<V, P> {
+        extends LinearLayout implements MvpView, ViewGroupDelegateCallback<V, P> {
 
-  protected P presenter;
-  protected ViewGroupMvpDelegate mvpDelegate;
-  private boolean retainInstance = false;
+    protected P presenter;
+    protected ViewGroupMvpDelegate mvpDelegate;
+    private boolean retainInstance = false;
 
-  public MvpLinearLayout(Context context) {
-    super(context);
-  }
-
-  public MvpLinearLayout(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
-  public MvpLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  @TargetApi(21)
-  public MvpLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-    this.isInEditMode();
-  }
-
-  /**
-   * Get the mvp delegate. This is internally used for creating presenter, attaching and detaching
-   * view from presenter etc.
-   *
-   * <p><b>Please note that only one instance of mvp delegate should be used per android.view.View
-   * instance</b>.
-   * </p>
-   *
-   * <p>
-   * Only override this method if you really know what you are doing.
-   * </p>
-   *
-   * @return {@link ViewGroupMvpDelegate}
-   */
-  @NonNull protected ViewGroupMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new ViewGroupMvpDelegateImpl<>(this, this, true);
+    public MvpLinearLayout(Context context) {
+        super(context);
     }
 
-    return mvpDelegate;
-  }
+    public MvpLinearLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  @Override protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    getMvpDelegate().onAttachedToWindow();
-  }
+    public MvpLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-  @Override protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
-    getMvpDelegate().onDetachedFromWindow();
-  }
+    @TargetApi(21)
+    public MvpLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.isInEditMode();
+    }
 
-  @SuppressLint("MissingSuperCall") @Override protected Parcelable onSaveInstanceState() {
-    return getMvpDelegate().onSaveInstanceState();
-  }
+    /**
+     * Get the mvp delegate. This is internally used for creating presenter, attaching and detaching
+     * view from presenter etc.
+     *
+     * <p><b>Please note that only one instance of mvp delegate should be used per android.view.View
+     * instance</b>.
+     * </p>
+     *
+     * <p>
+     * Only override this method if you really know what you are doing.
+     * </p>
+     *
+     * @return {@link ViewGroupMvpDelegate}
+     */
+    @NonNull
+    protected ViewGroupMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new ViewGroupMvpDelegateImpl<>(this, this, true);
+        }
 
-  @SuppressLint("MissingSuperCall") @Override
-  protected void onRestoreInstanceState(Parcelable state) {
-    getMvpDelegate().onRestoreInstanceState(state);
-  }
+        return mvpDelegate;
+    }
 
-  /**
-   * Instantiate a presenter instance
-   *
-   * @return The {@link MvpPresenter} for this view
-   */
-  public abstract P createPresenter();
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getMvpDelegate().onAttachedToWindow();
+    }
 
-  @Override public P getPresenter() {
-    return presenter;
-  }
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getMvpDelegate().onDetachedFromWindow();
+    }
 
-  @Override public void setPresenter(P presenter) {
-    this.presenter = presenter;
-  }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        return getMvpDelegate().onSaveInstanceState();
+    }
 
-  @Override public V getMvpView() {
-    return (V) this;
-  }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        getMvpDelegate().onRestoreInstanceState(state);
+    }
 
-  @Override public final Parcelable superOnSaveInstanceState() {
-    return super.onSaveInstanceState();
-  }
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link MvpPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public abstract P createPresenter();
 
-  @Override public final void superOnRestoreInstanceState(Parcelable state) {
-    super.onRestoreInstanceState(state);
-  }
+    @Override
+    public P getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public V getMvpView() {
+        return (V) this;
+    }
+
+    @Override
+    public final Parcelable superOnSaveInstanceState() {
+        return super.onSaveInstanceState();
+    }
+
+    @Override
+    public final void superOnRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+    }
 }

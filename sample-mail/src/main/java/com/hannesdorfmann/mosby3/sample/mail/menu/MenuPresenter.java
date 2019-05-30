@@ -21,8 +21,11 @@ import com.hannesdorfmann.mosby3.sample.mail.model.event.MailReadEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailProvider;
 import com.hannesdorfmann.mosby3.sample.mail.model.event.LoginSuccessfulEvent;
+
 import de.greenrobot.event.EventBus;
+
 import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -30,26 +33,27 @@ import javax.inject.Inject;
  */
 public class MenuPresenter extends BaseRxAuthPresenter<MenuView, List<Label>> {
 
-  @Inject public MenuPresenter(MailProvider mailProvider, EventBus eventBus) {
-    super(mailProvider, eventBus);
-  }
-
-  public void loadLabels(boolean pullToRefresh) {
-    subscribe(mailProvider.getLabels(), pullToRefresh);
-  }
-
-  public void onEventMainThread(LoginSuccessfulEvent event) {
-    super.onEventMainThread(event);
-    if (isViewAttached()){
-      getView().setAccount(event.getAccount());
+    @Inject
+    public MenuPresenter(MailProvider mailProvider, EventBus eventBus) {
+        super(mailProvider, eventBus);
     }
-  }
 
-  public void onEventMainThread(MailReadEvent event){
-    if (isViewAttached()){
-      String label = event.getMail().getLabel();
-      getView().decrementUnreadCount(label);
+    public void loadLabels(boolean pullToRefresh) {
+        subscribe(mailProvider.getLabels(), pullToRefresh);
     }
-  }
+
+    public void onEventMainThread(LoginSuccessfulEvent event) {
+        super.onEventMainThread(event);
+        if (isViewAttached()) {
+            getView().setAccount(event.getAccount());
+        }
+    }
+
+    public void onEventMainThread(MailReadEvent event) {
+        if (isViewAttached()) {
+            String label = event.getMail().getLabel();
+            getView().decrementUnreadCount(label);
+        }
+    }
 
 }

@@ -19,27 +19,32 @@ package com.hannesdorfmann.mosby3.mvp.delegate;
 
 import android.os.Parcelable;
 import android.view.AbsSavedState;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+
 import org.mockito.Mockito;
 
 /**
  * Used for partial mocking the delegate callback
  */
 public abstract class PartialViewGroupMvpDelegateCallbackImpl
-    implements ViewGroupDelegateCallback<MvpView, MvpPresenter<MvpView>> {
+        implements ViewGroupDelegateCallback<MvpView, MvpPresenter<MvpView>> {
 
-  MvpPresenter<MvpView> presenter;
+    MvpPresenter<MvpView> presenter;
 
-  @Override public MvpPresenter<MvpView> getPresenter() {
-    return presenter;
-  }
+    @Override
+    public MvpPresenter<MvpView> getPresenter() {
+        return presenter;
+    }
 
-  @Override public void setPresenter(MvpPresenter<MvpView> presenter) {
-    this.presenter = presenter;
-  }
+    @Override
+    public void setPresenter(MvpPresenter<MvpView> presenter) {
+        this.presenter = presenter;
+    }
 
-  @Override public Parcelable superOnSaveInstanceState() {
-    return Mockito.mock(AbsSavedState.class);
-  }
+    @Override
+    public Parcelable superOnSaveInstanceState() {
+        return Mockito.mock(AbsSavedState.class);
+    }
 }

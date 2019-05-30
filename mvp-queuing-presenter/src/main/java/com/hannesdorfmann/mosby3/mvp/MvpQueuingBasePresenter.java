@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * This Presenter implementation queues ({@link ViewAction} to interact with the view layer if no
  * view is attached by using {@link #onceViewAttached(ViewAction)}.
  * Once a view is (re)attached, the queued {@link ViewAction} will be executed one after another.
- *
+ * <p>
  * In the rare case you don't want to queue the any {@link ViewAction} but rather execute it once only
  * use {@link #ifViewAttached(ViewAction)}.
  *

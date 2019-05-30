@@ -27,6 +27,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -40,51 +41,60 @@ import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.NotRetainingCountriesF
  */
 public class NestedViewPagerFragment extends Fragment {
 
-  private Unbinder unbinder;
+    private Unbinder unbinder;
 
-  @BindView(R.id.viewPager) ViewPager viewPager;
-  @BindView(R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_nested_viewpager, container, false);
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
-
-    viewPager.setAdapter(new NestedPagerAdapter(getChildFragmentManager()));
-    tabLayout.setupWithViewPager(viewPager);
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    SampleApplication.getRefWatcher(getActivity()).watch(this);
-  }
-
-  private class NestedPagerAdapter extends FragmentPagerAdapter {
-
-    public NestedPagerAdapter(FragmentManager fm) {
-      super(fm);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_nested_viewpager, container, false);
     }
 
-    @Override public Fragment getItem(int position) {
-      return new NotRetainingCountriesFragment();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
-    @Override public int getCount() {
-      return 5;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        unbinder = ButterKnife.bind(this, view);
+
+        viewPager.setAdapter(new NestedPagerAdapter(getChildFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override public CharSequence getPageTitle(int position) {
-      return "Fragment " + position;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SampleApplication.getRefWatcher(getActivity()).watch(this);
     }
-  }
+
+    private class NestedPagerAdapter extends FragmentPagerAdapter {
+
+        public NestedPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new NotRetainingCountriesFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Fragment " + position;
+        }
+    }
 }

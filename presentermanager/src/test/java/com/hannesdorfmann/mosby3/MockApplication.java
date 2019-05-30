@@ -18,6 +18,7 @@
 package com.hannesdorfmann.mosby3;
 
 import android.app.Application;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +27,19 @@ import java.util.List;
  */
 
 public class MockApplication extends Application {
-  public List<ActivityLifecycleCallbacks> lifecycleCallbacksList = new ArrayList<>();
-  public int registerInvocations =0;
-  public int unregisterInvocations =0;
+    public List<ActivityLifecycleCallbacks> lifecycleCallbacksList = new ArrayList<>();
+    public int registerInvocations = 0;
+    public int unregisterInvocations = 0;
 
-  @Override public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
-    lifecycleCallbacksList.add(callback);
-    registerInvocations++;
-  }
+    @Override
+    public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+        lifecycleCallbacksList.add(callback);
+        registerInvocations++;
+    }
 
-  @Override public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
-    lifecycleCallbacksList.remove(callback);
-    unregisterInvocations++;
-  }
+    @Override
+    public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+        lifecycleCallbacksList.remove(callback);
+        unregisterInvocations++;
+    }
 }

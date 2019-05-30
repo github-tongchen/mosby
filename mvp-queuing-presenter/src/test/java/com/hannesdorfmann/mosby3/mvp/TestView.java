@@ -6,9 +6,9 @@ import java.util.List;
 
 public class TestView implements MvpView {
 
-  public List<Integer> showInvocations = new ArrayList<Integer>();
+    public List<Integer> showInvocations = new ArrayList<Integer>();
 
-  public void show(int i){
-    this.showInvocations.add(i);
-  }
+    public void show(int i) {
+        this.showInvocations.add(i);
+    }
 }

@@ -17,6 +17,7 @@
 package com.hannesdorfmann.mosby3.mvp.viewstate;
 
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 /**
@@ -27,5 +28,5 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  * @since 1.0.0
  */
 public interface RestorableParcelableViewState<V extends MvpView>
-    extends RestorableViewState<V>, Parcelable {
+        extends RestorableViewState<V>, Parcelable {
 }

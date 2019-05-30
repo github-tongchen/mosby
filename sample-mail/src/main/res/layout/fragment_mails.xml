@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Hannes Dorfmann.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,24 +16,21 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-  <include layout="@layout/merge_mails"/>
+    <include layout="@layout/merge_mails" />
 
-  <com.melnykov.fab.FloatingActionButton
-      xmlns:fab="http://schemas.android.com/apk/res-auto"
-      android:id="@+id/createMail"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginRight="16dp"
-      android:layout_marginBottom="16dp"
-      android:layout_gravity="bottom|right"
-      android:src="@drawable/ic_create"
-      android:transitionName="@string/shared_write_action"
-      android:textColor="@color/white"
-      fab:fab_colorNormal="@color/accent"
-      fab:fab_colorPressed="@color/accent_dark"
-      fab:fab_colorRipple="@color/accent"
-      />
+    <com.melnykov.fab.FloatingActionButton xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/createMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_create"
+        android:transitionName="@string/shared_write_action"
+        android:textColor="@color/white"
+        fab:fab_colorNormal="@color/accent"
+        fab:fab_colorPressed="@color/accent_dark"
+        fab:fab_colorRipple="@color/accent" />
 </FrameLayout>

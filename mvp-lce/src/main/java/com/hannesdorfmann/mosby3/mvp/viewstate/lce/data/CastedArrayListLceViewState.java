@@ -19,10 +19,12 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.AbsParcelableLceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,27 +45,30 @@ import java.util.List;
  */
 @Deprecated
 public class CastedArrayListLceViewState<D extends List<? extends Parcelable>, V extends MvpLceView<D>>
-    extends AbsParcelableLceViewState<D, V> {
+        extends AbsParcelableLceViewState<D, V> {
 
-  public static final Creator<CastedArrayListLceViewState> CREATOR =
-      new Creator<CastedArrayListLceViewState>() {
-        @Override public CastedArrayListLceViewState createFromParcel(Parcel source) {
-          return new CastedArrayListLceViewState(source);
-        }
+    public static final Creator<CastedArrayListLceViewState> CREATOR =
+            new Creator<CastedArrayListLceViewState>() {
+                @Override
+                public CastedArrayListLceViewState createFromParcel(Parcel source) {
+                    return new CastedArrayListLceViewState(source);
+                }
 
-        @Override public CastedArrayListLceViewState[] newArray(int size) {
-          return new CastedArrayListLceViewState[size];
-        }
-      };
+                @Override
+                public CastedArrayListLceViewState[] newArray(int size) {
+                    return new CastedArrayListLceViewState[size];
+                }
+            };
 
-  public CastedArrayListLceViewState() {
-  }
+    public CastedArrayListLceViewState() {
+    }
 
-  protected CastedArrayListLceViewState(Parcel source) {
-    readFromParcel(source);
-  }
+    protected CastedArrayListLceViewState(Parcel source) {
+        readFromParcel(source);
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 /*
     if (loadedData != null && !(loadedData instanceof ArrayList)) {
       throw new ClassCastException(
@@ -76,22 +81,23 @@ public class CastedArrayListLceViewState<D extends List<? extends Parcelable>, V
 
     */
 
-    // Content
-    dest.writeList(loadedData);
+        // Content
+        dest.writeList(loadedData);
 
-    super.writeToParcel(dest, flags);
-  }
+        super.writeToParcel(dest, flags);
+    }
 
-  @Override protected void readFromParcel(Parcel source) {
-    loadedData = (D) new ArrayList<Parcelable>();
-    source.readList(loadedData, getClassLoader());
-    super.readFromParcel(source);
-  }
+    @Override
+    protected void readFromParcel(Parcel source) {
+        loadedData = (D) new ArrayList<Parcelable>();
+        source.readList(loadedData, getClassLoader());
+        super.readFromParcel(source);
+    }
 
-  /**
-   * The class loader used for deserializing the list of parcelable items
-   */
-  protected ClassLoader getClassLoader() {
-    return getClass().getClassLoader();
-  }
+    /**
+     * The class loader used for deserializing the list of parcelable items
+     */
+    protected ClassLoader getClassLoader() {
+        return getClass().getClassLoader();
+    }
 }

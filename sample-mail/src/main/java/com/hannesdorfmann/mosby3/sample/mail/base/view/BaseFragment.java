@@ -24,7 +24,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 
 import butterknife.Unbinder;
@@ -36,45 +38,51 @@ import icepick.Icepick;
  * @author Hannes Dorfmann
  */
 public abstract class BaseFragment extends Fragment {
-  private Unbinder unbinder;
+    private Unbinder unbinder;
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    injectDependencies();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
 
-    super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
-  }
+        super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
+    }
 
-  @LayoutRes protected abstract int getLayoutRes();
+    @LayoutRes
+    protected abstract int getLayoutRes();
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    Icepick.restoreInstanceState(this, savedInstanceState);
-    return inflater.inflate(getLayoutRes(), container, false);
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        Icepick.restoreInstanceState(this, savedInstanceState);
+        return inflater.inflate(getLayoutRes(), container, false);
+    }
 
-  @Override public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    Icepick.saveInstanceState(this, outState);
-  }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 //    injectDependencies();
-    super.onViewCreated(view, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
-  }
+        super.onViewCreated(view, savedInstanceState);
+        unbinder = ButterKnife.bind(this, view);
+    }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    unbinder.unbind();
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-  /**
-   * Inject the dependencies
-   */
-  protected void injectDependencies() {
+    /**
+     * Inject the dependencies
+     */
+    protected void injectDependencies() {
 
-  }
+    }
 
 }

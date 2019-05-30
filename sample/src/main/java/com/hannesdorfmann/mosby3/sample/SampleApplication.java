@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.sample;
 
 import android.app.Application;
 import android.content.Context;
+
 import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpDelegateImpl;
 import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpViewStateDelegateImpl;
 import com.hannesdorfmann.mosby3.mvp.delegate.FragmentMvpDelegateImpl;
@@ -33,21 +34,22 @@ import com.squareup.leakcanary.RefWatcher;
  */
 public class SampleApplication extends Application {
 
-  public static RefWatcher getRefWatcher(Context context) {
-    SampleApplication application = (SampleApplication) context.getApplicationContext();
-    return application.refWatcher;
-  }
-
-  private RefWatcher refWatcher;
-
-  @Override public void onCreate() {
-    super.onCreate();
-    if (LeakCanary.isInAnalyzerProcess(this)) {
-      // This process is dedicated to LeakCanary for heap analysis.
-      // You should not init your app in this process.
-      return;
+    public static RefWatcher getRefWatcher(Context context) {
+        SampleApplication application = (SampleApplication) context.getApplicationContext();
+        return application.refWatcher;
     }
-    refWatcher = LeakCanary.install(this);
+
+    private RefWatcher refWatcher;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
 
     /*
     ActivityMvpViewStateDelegateImpl.DEBUG = true;
@@ -57,5 +59,5 @@ public class SampleApplication extends Application {
     FragmentMvpDelegateImpl.DEBUG=true;
     ViewGroupMvpDelegateImpl.DEBUG = true;
     */
-  }
+    }
 }

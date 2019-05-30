@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Hannes Dorfmann.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,15 +22,13 @@
     android:paddingRight="@dimen/menu_padding_left_right"
     android:paddingTop="@dimen/menu_item_padding_top_bottom"
     android:paddingBottom="@dimen/menu_item_padding_top_bottom"
-    android:background="?android:attr/selectableItemBackground"
-    >
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/name"
@@ -42,7 +39,6 @@
         android:layout_marginLeft="16dp"
         android:gravity="left|center_vertical"
         android:textColor="@color/secondary_text"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp" />
 
 </LinearLayout>

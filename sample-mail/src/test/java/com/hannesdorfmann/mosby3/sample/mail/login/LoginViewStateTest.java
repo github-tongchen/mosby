@@ -17,7 +17,9 @@
 package com.hannesdorfmann.mosby3.sample.mail.login;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import junit.framework.Assert;
+
 import org.junit.Test;
 
 /**
@@ -26,87 +28,102 @@ import org.junit.Test;
 
 public class LoginViewStateTest {
 
-  @Test public void testShowLoginForm() {
+    @Test
+    public void testShowLoginForm() {
 
-    final AtomicBoolean loginCalled = new AtomicBoolean(false);
-    LoginView view = new LoginView() {
+        final AtomicBoolean loginCalled = new AtomicBoolean(false);
+        LoginView view = new LoginView() {
 
-      @Override public void showLoginForm() {
-        loginCalled.set(true);
-      }
+            @Override
+            public void showLoginForm() {
+                loginCalled.set(true);
+            }
 
-      @Override public void showError() {
-        Assert.fail("showError() instead of showLoginForm()");
-      }
+            @Override
+            public void showError() {
+                Assert.fail("showError() instead of showLoginForm()");
+            }
 
-      @Override public void showLoading() {
-        Assert.fail("showLoading() instead of showLoginForm()");
-      }
+            @Override
+            public void showLoading() {
+                Assert.fail("showLoading() instead of showLoginForm()");
+            }
 
-      @Override public void loginSuccessful() {
-        Assert.fail("loginSuccessful() instead of showLoginForm()");
-      }
-    };
+            @Override
+            public void loginSuccessful() {
+                Assert.fail("loginSuccessful() instead of showLoginForm()");
+            }
+        };
 
-    LoginViewState viewState = new LoginViewState();
-    viewState.setShowLoginForm();
-    viewState.apply(view, false);
-    Assert.assertTrue(loginCalled.get());
-  }
+        LoginViewState viewState = new LoginViewState();
+        viewState.setShowLoginForm();
+        viewState.apply(view, false);
+        Assert.assertTrue(loginCalled.get());
+    }
 
-  @Test public void testShowError() {
+    @Test
+    public void testShowError() {
 
-    final AtomicBoolean errorCalled = new AtomicBoolean(false);
-    LoginView view = new LoginView() {
+        final AtomicBoolean errorCalled = new AtomicBoolean(false);
+        LoginView view = new LoginView() {
 
-      @Override public void showLoginForm() {
-        Assert.fail("showLoginForm() instead of showError()");
-      }
+            @Override
+            public void showLoginForm() {
+                Assert.fail("showLoginForm() instead of showError()");
+            }
 
-      @Override public void showError() {
-        errorCalled.set(true);
-      }
+            @Override
+            public void showError() {
+                errorCalled.set(true);
+            }
 
-      @Override public void showLoading() {
-        Assert.fail("showLoading() instead of showError()");
-      }
+            @Override
+            public void showLoading() {
+                Assert.fail("showLoading() instead of showError()");
+            }
 
-      @Override public void loginSuccessful() {
-        Assert.fail("loginSuccessful() instead of showError()");
-      }
-    };
+            @Override
+            public void loginSuccessful() {
+                Assert.fail("loginSuccessful() instead of showError()");
+            }
+        };
 
-    LoginViewState viewState = new LoginViewState();
-    viewState.setShowError();
-    viewState.apply(view, false);
-    Assert.assertTrue(errorCalled.get());
-  }
+        LoginViewState viewState = new LoginViewState();
+        viewState.setShowError();
+        viewState.apply(view, false);
+        Assert.assertTrue(errorCalled.get());
+    }
 
-  @Test public void testShowLoading() {
+    @Test
+    public void testShowLoading() {
 
-    final AtomicBoolean loadingCalled = new AtomicBoolean(false);
-    LoginView view = new LoginView() {
+        final AtomicBoolean loadingCalled = new AtomicBoolean(false);
+        LoginView view = new LoginView() {
 
-      @Override public void showLoginForm() {
-        Assert.fail("showLoginForm() instead of showLoading()");
-      }
+            @Override
+            public void showLoginForm() {
+                Assert.fail("showLoginForm() instead of showLoading()");
+            }
 
-      @Override public void showError() {
-        Assert.fail("showError() instead of showLoading()");
-      }
+            @Override
+            public void showError() {
+                Assert.fail("showError() instead of showLoading()");
+            }
 
-      @Override public void showLoading() {
-        loadingCalled.set(true);
-      }
+            @Override
+            public void showLoading() {
+                loadingCalled.set(true);
+            }
 
-      @Override public void loginSuccessful() {
-        Assert.fail("loginSuccessful() instead of showLoading()");
-      }
-    };
+            @Override
+            public void loginSuccessful() {
+                Assert.fail("loginSuccessful() instead of showLoading()");
+            }
+        };
 
-    LoginViewState viewState = new LoginViewState();
-    viewState.setShowLoading();
-    viewState.apply(view, false);
-    Assert.assertTrue(loadingCalled.get());
-  }
+        LoginViewState viewState = new LoginViewState();
+        viewState.setShowLoading();
+        viewState.apply(view, false);
+        Assert.assertTrue(loadingCalled.get());
+    }
 }

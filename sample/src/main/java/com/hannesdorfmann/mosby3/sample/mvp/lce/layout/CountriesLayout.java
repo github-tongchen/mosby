@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.layout.MvpViewStateFrameLayout;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
@@ -32,121 +33,138 @@ import butterknife.OnClick;
  * @author Hannes Dorfmann
  */
 public class CountriesLayout extends MvpViewStateFrameLayout<CountriesView, CountriesPresenter, CastedArrayListLceViewState<List<Country>, CountriesView>>
-    implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
+        implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
 
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.errorView) TextView errorView;
-  @BindView(R.id.contentView) SwipeRefreshLayout contentView;
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.loadingView)
+    View loadingView;
+    @BindView(R.id.errorView)
+    TextView errorView;
+    @BindView(R.id.contentView)
+    SwipeRefreshLayout contentView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-  private CountriesAdapter adapter;
+    private CountriesAdapter adapter;
 
-  public CountriesLayout(Context context) {
-    super(context);
-  }
-
-  public CountriesLayout(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
-  public CountriesLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  @TargetApi(21)
-  public CountriesLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-  }
-
-  @Override protected void onFinishInflate() {
-    super.onFinishInflate();
-    ButterKnife.bind(this, this);
-
-    contentView.setOnRefreshListener(this);
-
-    adapter = new CountriesAdapter(getContext());
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerView.setAdapter(adapter);
-  }
-
-  @Override public CountriesPresenter createPresenter() {
-    return new SimpleCountriesPresenter();
-  }
-
-  @Override public CastedArrayListLceViewState<List<Country>, CountriesView> createViewState() {
-    return new CastedArrayListLceViewState<List<Country>, CountriesView>();
-  }
-
-  @Override public void onNewViewStateInstance() {
-    loadData(false);
-  }
-
-  @Override public void showLoading(boolean pullToRefresh) {
-    errorView.setVisibility(View.GONE);
-
-    if (pullToRefresh) {
-      if (pullToRefresh && !contentView.isRefreshing()) {
-        // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
-        contentView.post(new Runnable() {
-          @Override public void run() {
-            contentView.setRefreshing(true);
-          }
-        });
-      }
-      contentView.setVisibility(View.VISIBLE);
-    } else {
-      loadingView.setVisibility(View.VISIBLE);
-      contentView.setVisibility(View.GONE);
+    public CountriesLayout(Context context) {
+        super(context);
     }
-    getViewState().setStateShowLoading(pullToRefresh);
-  }
 
-  @Override public void showContent() {
-    loadingView.setVisibility(View.GONE);
-    errorView.setVisibility(View.GONE);
-    contentView.setVisibility(View.VISIBLE);
-
-    contentView.setRefreshing(false);
-    getViewState().setStateShowContent(adapter.getCountries());
-  }
-
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-    getViewState().setStateShowError(e, pullToRefresh);
-
-    String msg = CountriesErrorMessage.get(e, pullToRefresh, getContext());
-
-    loadingView.setVisibility(View.GONE);
-    if (pullToRefresh) {
-      contentView.setRefreshing(false);
-      if (!isRestoringViewState()) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-      }
-    } else {
-      contentView.setVisibility(View.GONE);
-      errorView.setText(msg);
-      errorView.setVisibility(View.VISIBLE);
+    public CountriesLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
-  }
 
-  @Override public void setData(List<Country> data) {
-    adapter.setCountries(data);
-    adapter.notifyDataSetChanged();
-  }
+    public CountriesLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadCountries(pullToRefresh);
-  }
+    @TargetApi(21)
+    public CountriesLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
 
-  @Override public void onRefresh() {
-    loadData(true);
-  }
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this, this);
 
-  @OnClick(R.id.errorView) public void onErrorViewClicked() {
-    loadData(false);
-  }
+        contentView.setOnRefreshListener(this);
 
-  @Override protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
-    SampleApplication.getRefWatcher(getContext()).watch(this);
-  }
+        adapter = new CountriesAdapter(getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public CountriesPresenter createPresenter() {
+        return new SimpleCountriesPresenter();
+    }
+
+    @Override
+    public CastedArrayListLceViewState<List<Country>, CountriesView> createViewState() {
+        return new CastedArrayListLceViewState<List<Country>, CountriesView>();
+    }
+
+    @Override
+    public void onNewViewStateInstance() {
+        loadData(false);
+    }
+
+    @Override
+    public void showLoading(boolean pullToRefresh) {
+        errorView.setVisibility(View.GONE);
+
+        if (pullToRefresh) {
+            if (pullToRefresh && !contentView.isRefreshing()) {
+                // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
+                contentView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        contentView.setRefreshing(true);
+                    }
+                });
+            }
+            contentView.setVisibility(View.VISIBLE);
+        } else {
+            loadingView.setVisibility(View.VISIBLE);
+            contentView.setVisibility(View.GONE);
+        }
+        getViewState().setStateShowLoading(pullToRefresh);
+    }
+
+    @Override
+    public void showContent() {
+        loadingView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+        contentView.setVisibility(View.VISIBLE);
+
+        contentView.setRefreshing(false);
+        getViewState().setStateShowContent(adapter.getCountries());
+    }
+
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        getViewState().setStateShowError(e, pullToRefresh);
+
+        String msg = CountriesErrorMessage.get(e, pullToRefresh, getContext());
+
+        loadingView.setVisibility(View.GONE);
+        if (pullToRefresh) {
+            contentView.setRefreshing(false);
+            if (!isRestoringViewState()) {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            contentView.setVisibility(View.GONE);
+            errorView.setText(msg);
+            errorView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void setData(List<Country> data) {
+        adapter.setCountries(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadCountries(pullToRefresh);
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData(true);
+    }
+
+    @OnClick(R.id.errorView)
+    public void onErrorViewClicked() {
+        loadData(false);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        SampleApplication.getRefWatcher(getContext()).watch(this);
+    }
 }

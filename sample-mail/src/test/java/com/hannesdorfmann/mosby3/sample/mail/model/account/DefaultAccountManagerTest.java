@@ -17,7 +17,9 @@
 package com.hannesdorfmann.mosby3.sample.mail.model.account;
 
 import junit.framework.Assert;
+
 import org.junit.Test;
+
 import rx.Subscriber;
 
 /**
@@ -25,35 +27,43 @@ import rx.Subscriber;
  */
 public class DefaultAccountManagerTest {
 
-  @Test public void loginSuccessful() {
-    AccountManager manager = new DefaultAccountManager();
-    manager.doLogin(new AuthCredentials("ted", "robin")).subscribe(new Subscriber<Account>() {
-      @Override public void onCompleted() {
-      }
+    @Test
+    public void loginSuccessful() {
+        AccountManager manager = new DefaultAccountManager();
+        manager.doLogin(new AuthCredentials("ted", "robin")).subscribe(new Subscriber<Account>() {
+            @Override
+            public void onCompleted() {
+            }
 
-      @Override public void onError(Throwable e) {
-        Assert.fail("Login failed, but should be successful");
-      }
+            @Override
+            public void onError(Throwable e) {
+                Assert.fail("Login failed, but should be successful");
+            }
 
-      @Override public void onNext(Account account) {
-        Assert.assertEquals("Ted Mosby", account.getName());
-      }
-    });
-  }
+            @Override
+            public void onNext(Account account) {
+                Assert.assertEquals("Ted Mosby", account.getName());
+            }
+        });
+    }
 
-  @Test public void loginFail() {
-    AccountManager manager = new DefaultAccountManager();
-    manager.doLogin(new AuthCredentials("Foo", "Password")).subscribe(new Subscriber<Account>() {
-      @Override public void onCompleted() {
-        Assert.fail("Login successful, but should be fail");
-      }
+    @Test
+    public void loginFail() {
+        AccountManager manager = new DefaultAccountManager();
+        manager.doLogin(new AuthCredentials("Foo", "Password")).subscribe(new Subscriber<Account>() {
+            @Override
+            public void onCompleted() {
+                Assert.fail("Login successful, but should be fail");
+            }
 
-      @Override public void onError(Throwable e) {
-        Assert.assertTrue(e instanceof LoginException);
-      }
+            @Override
+            public void onError(Throwable e) {
+                Assert.assertTrue(e instanceof LoginException);
+            }
 
-      @Override public void onNext(Account account) {
-      }
-    });
-  }
+            @Override
+            public void onNext(Account account) {
+            }
+        });
+    }
 }

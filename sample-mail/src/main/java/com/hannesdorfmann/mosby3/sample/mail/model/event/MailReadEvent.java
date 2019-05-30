@@ -9,18 +9,18 @@ import com.hannesdorfmann.mosby3.sample.mail.model.mail.Mail;
  */
 public class MailReadEvent {
 
-  boolean read;
-  Mail mail;
+    boolean read;
+    Mail mail;
 
-  public MailReadEvent(Mail mail, boolean read) {
-    this.mail = mail;
-  }
+    public MailReadEvent(Mail mail, boolean read) {
+        this.mail = mail;
+    }
 
-  public Mail getMail() {
-    return mail;
-  }
+    public Mail getMail() {
+        return mail;
+    }
 
-  public boolean isRead() {
-    return read;
-  }
+    public boolean isRead() {
+        return read;
+    }
 }

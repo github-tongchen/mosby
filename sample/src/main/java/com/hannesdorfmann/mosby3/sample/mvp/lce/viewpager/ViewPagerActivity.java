@@ -24,6 +24,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
 import com.hannesdorfmann.mosby3.sample.R;
 import com.hannesdorfmann.mosby3.sample.mvp.customviewstate.MyCustomFragment;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.RetainingCountriesFragment;
@@ -33,61 +34,68 @@ import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.RetainingCountriesFrag
  */
 public class ViewPagerActivity extends AppCompatActivity {
 
-  public static final String KEY_STATEPAGER = "ViewPagerActivity.STATE_PATER";
+    public static final String KEY_STATEPAGER = "ViewPagerActivity.STATE_PATER";
 
-  ViewPager viewPager;
-  TabLayout tabLayout;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_viewpager);
-    viewPager = (ViewPager) findViewById(R.id.viewPager);
-    tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-    if (getIntent().getBooleanExtra(KEY_STATEPAGER, false)) {
-      viewPager.setAdapter(new MyFragmentStatePagerAdapter(getSupportFragmentManager()));
-    } else {
-      viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
+        if (getIntent().getBooleanExtra(KEY_STATEPAGER, false)) {
+            viewPager.setAdapter(new MyFragmentStatePagerAdapter(getSupportFragmentManager()));
+        } else {
+            viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
+        }
+
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    tabLayout.setupWithViewPager(viewPager);
-  }
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-  class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        public MyFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    public MyFragmentPagerAdapter(FragmentManager fm) {
-      super(fm);
+        @Override
+        public Fragment getItem(int position) {
+            return position % 2 == 0 ? new RetainingCountriesFragment() : new MyCustomFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 10;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Tab " + position;
+        }
     }
 
-    @Override public Fragment getItem(int position) {
-      return position % 2 == 0 ? new RetainingCountriesFragment() : new MyCustomFragment();
-    }
+    class MyFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 
-    @Override public int getCount() {
-      return 10;
-    }
+        public MyFragmentStatePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    @Override public CharSequence getPageTitle(int position) {
-      return "Tab " + position;
-    }
-  }
+        @Override
+        public Fragment getItem(int position) {
+            return position % 2 == 0 ? new RetainingCountriesFragment() : new MyCustomFragment();
+        }
 
-  class MyFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
+        @Override
+        public int getCount() {
+            return 10;
+        }
 
-    public MyFragmentStatePagerAdapter(FragmentManager fm) {
-      super(fm);
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Tab " + position;
+        }
     }
-
-    @Override public Fragment getItem(int position) {
-      return position % 2 == 0 ? new RetainingCountriesFragment() : new MyCustomFragment();
-    }
-
-    @Override public int getCount() {
-      return 10;
-    }
-
-    @Override public CharSequence getPageTitle(int position) {
-      return "Tab " + position;
-    }
-  }
 }

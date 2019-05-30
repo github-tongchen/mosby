@@ -4,7 +4,9 @@ import com.hannesdorfmann.mosby3.sample.mail.base.presenter.BaseRxLcePresenter;
 import com.hannesdorfmann.mosby3.sample.mail.model.contact.ContactsManager;
 import com.hannesdorfmann.mosby3.sample.mail.model.contact.Person;
 import com.hannesdorfmann.mosby3.sample.mail.model.contact.ProfileScreen;
+
 import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -12,13 +14,14 @@ import javax.inject.Inject;
  */
 public class ProfilePresenter extends BaseRxLcePresenter<ProfileView, List<ProfileScreen>> {
 
-  private ContactsManager contactsManager;
+    private ContactsManager contactsManager;
 
-  @Inject public ProfilePresenter(ContactsManager contactsManager) {
-    this.contactsManager = contactsManager;
-  }
+    @Inject
+    public ProfilePresenter(ContactsManager contactsManager) {
+        this.contactsManager = contactsManager;
+    }
 
-  public void loadScreens(Person person) {
-    subscribe(contactsManager.getProfileScreens(person), false);
-  }
+    public void loadScreens(Person person) {
+        subscribe(contactsManager.getProfileScreens(person), false);
+    }
 }

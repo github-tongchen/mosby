@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 
 @TargetApi(21)
@@ -42,7 +43,7 @@ public class RevealVisibilityTransition extends Visibility {
                              TransitionValues endValues) {
 
         Animator reveal = ViewAnimationUtils.createCircularReveal(view, 140, 200,
-            0, 1000);
+                0, 1000);
         return new NoPauseAnimator(reveal);
 
     }
@@ -52,7 +53,7 @@ public class RevealVisibilityTransition extends Visibility {
                                 TransitionValues endValues) {
 
         Animator reveal = ViewAnimationUtils.createCircularReveal(view, 140, 200,
-           1000, 0);
+                1000, 0);
         return new NoPauseAnimator(reveal);
 
     }

@@ -10,11 +10,9 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="@color/label_layout_button"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
-    <fr.castorflex.android.circularprogressbar.CircularProgressBar
-        android:id="@+id/labelLoadingView"
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar android:id="@+id/labelLoadingView"
         xmlns:cpb="http://schemas.android.com/apk/res-auto"
         android:layout_width="10dp"
         android:layout_height="10dp"
@@ -25,7 +23,6 @@
         android:layout_marginLeft="6dp"
         android:layout_marginRight="2dp"
         cpb:cpb_stroke_width="1dp"
-        cpb:cpb_color="@color/primary_light"
-        />
+        cpb:cpb_color="@color/primary_light" />
 
 </merge>

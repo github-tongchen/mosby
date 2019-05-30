@@ -18,6 +18,7 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.AbsParcelableLceViewState;
@@ -39,44 +40,48 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
  * @since 1.0.0
  */
 public class ParcelableDataLceViewState<D extends Parcelable, V extends MvpLceView<D>>
-    extends AbsParcelableLceViewState<D, V> {
+        extends AbsParcelableLceViewState<D, V> {
 
-  public static final Parcelable.Creator<ParcelableDataLceViewState> CREATOR =
-      new Parcelable.Creator<ParcelableDataLceViewState>() {
-        @Override public ParcelableDataLceViewState createFromParcel(Parcel source) {
-          return new ParcelableDataLceViewState(source);
-        }
+    public static final Parcelable.Creator<ParcelableDataLceViewState> CREATOR =
+            new Parcelable.Creator<ParcelableDataLceViewState>() {
+                @Override
+                public ParcelableDataLceViewState createFromParcel(Parcel source) {
+                    return new ParcelableDataLceViewState(source);
+                }
 
-        @Override public ParcelableDataLceViewState[] newArray(int size) {
-          return new ParcelableDataLceViewState[size];
-        }
-      };
+                @Override
+                public ParcelableDataLceViewState[] newArray(int size) {
+                    return new ParcelableDataLceViewState[size];
+                }
+            };
 
-  private static final String BUNDLE_PARCELABLE_WORKAROUND =
-      "com.hannesdorfmann.mosby.mvp.viewstate.lce.ParcelableLceViewState.workaround";
+    private static final String BUNDLE_PARCELABLE_WORKAROUND =
+            "com.hannesdorfmann.mosby.mvp.viewstate.lce.ParcelableLceViewState.workaround";
 
-  public ParcelableDataLceViewState() {
-  }
+    public ParcelableDataLceViewState() {
+    }
 
-  private ParcelableDataLceViewState(Parcel source) {
-    readFromParcel(source);
-  }
+    private ParcelableDataLceViewState(Parcel source) {
+        readFromParcel(source);
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 
-    dest.writeParcelable(loadedData, flags);
-    super.writeToParcel(dest, flags);
-  }
+        dest.writeParcelable(loadedData, flags);
+        super.writeToParcel(dest, flags);
+    }
 
-  @Override protected void readFromParcel(Parcel source) {
-    loadedData = source.readParcelable(getClassLoader());
-    super.readFromParcel(source);
-  }
+    @Override
+    protected void readFromParcel(Parcel source) {
+        loadedData = source.readParcelable(getClassLoader());
+        super.readFromParcel(source);
+    }
 
-  /**
-   * Get the ClassLoader that is used for deserialization
-   */
-  protected ClassLoader getClassLoader() {
-    return getClass().getClassLoader();
-  }
+    /**
+     * Get the ClassLoader that is used for deserialization
+     */
+    protected ClassLoader getClassLoader() {
+        return getClass().getClassLoader();
+    }
 }

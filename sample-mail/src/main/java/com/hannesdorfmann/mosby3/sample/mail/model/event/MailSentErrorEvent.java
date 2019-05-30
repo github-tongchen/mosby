@@ -7,19 +7,19 @@ import com.hannesdorfmann.mosby3.sample.mail.model.mail.Mail;
  */
 public class MailSentErrorEvent {
 
-  private Mail mail;
-  private Throwable exception;
+    private Mail mail;
+    private Throwable exception;
 
-  public MailSentErrorEvent(Mail mail, Throwable exception) {
-    this.mail = mail;
-    this.exception = exception;
-  }
+    public MailSentErrorEvent(Mail mail, Throwable exception) {
+        this.mail = mail;
+        this.exception = exception;
+    }
 
-  public Mail getMail() {
-    return mail;
-  }
+    public Mail getMail() {
+        return mail;
+    }
 
-  public Throwable getException() {
-    return exception;
-  }
+    public Throwable getException() {
+        return exception;
+    }
 }

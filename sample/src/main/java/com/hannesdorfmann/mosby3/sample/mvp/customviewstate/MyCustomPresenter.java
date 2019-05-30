@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.sample.mvp.customviewstate;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import com.hannesdorfmann.mosby3.sample.mvp.model.custom.A;
 import com.hannesdorfmann.mosby3.sample.mvp.model.custom.B;
+
 import java.util.Random;
 
 /**
@@ -26,22 +27,23 @@ import java.util.Random;
  */
 public class MyCustomPresenter extends MvpBasePresenter<MyCustomView> {
 
-  Random random = new Random();
-  public void doA() {
+    Random random = new Random();
 
-    A a = new A("My name is A "+random.nextInt(10));
+    public void doA() {
 
-    if (isViewAttached()) {
-      getView().showA(a);
+        A a = new A("My name is A " + random.nextInt(10));
+
+        if (isViewAttached()) {
+            getView().showA(a);
+        }
     }
-  }
 
-  public void doB() {
+    public void doB() {
 
-    B b = new B("I am B "+random.nextInt(10));
+        B b = new B("I am B " + random.nextInt(10));
 
-    if (isViewAttached()) {
-      getView().showB(b);
+        if (isViewAttached()) {
+            getView().showB(b);
+        }
     }
-  }
 }

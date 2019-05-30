@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
 import com.hannesdorfmann.mosby3.sample.mvp.customviewstate.MyCustomFragment;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.fragment.CountriesFragment;
 import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.NotRetainingCountriesFragment;
@@ -32,53 +33,54 @@ import com.hannesdorfmann.mosby3.sample.mvp.lce.viewstate.nested.NestedViewPager
  */
 public class FragmentContainerActivity extends AppCompatActivity {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_fragment_container);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment_container);
 
-    if (savedInstanceState == null) {
-      Fragment f = getFragment();
-      if (f == null) {
-        Toast.makeText(this, "Error: No fragment specified", Toast.LENGTH_SHORT).show();
-        finish();
-      } else {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, f).commit();
-      }
-    }
-  }
-
-  private Fragment getFragment() {
-    String fragmentName = getIntent().getStringExtra("fragment");
-    if (fragmentName == null) {
-      return null;
+        if (savedInstanceState == null) {
+            Fragment f = getFragment();
+            if (f == null) {
+                Toast.makeText(this, "Error: No fragment specified", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, f).commit();
+            }
+        }
     }
 
-    if ("CountriesFragment".equals(fragmentName)) {
-      return new CountriesFragment();
+    private Fragment getFragment() {
+        String fragmentName = getIntent().getStringExtra("fragment");
+        if (fragmentName == null) {
+            return null;
+        }
+
+        if ("CountriesFragment".equals(fragmentName)) {
+            return new CountriesFragment();
+        }
+
+        if ("RetainingCountriesFragment".equals(fragmentName)) {
+            return new RetainingCountriesFragment();
+        }
+
+        if ("NotRetainingCountriesFragment".equals(fragmentName)) {
+            return new NotRetainingCountriesFragment();
+        }
+
+        if ("CustomViewStateFragment".equals(fragmentName)) {
+            return new MyCustomFragment();
+        }
+
+        if ("NestedNotRetainingFragment".equals(fragmentName)) {
+            return new NestedFragment();
+        }
+
+        if ("NestedNotRetainingViewPagerFragment".equals(fragmentName)) {
+            return new NestedViewPagerFragment();
+        }
+
+        getSupportActionBar().setTitle(fragmentName);
+
+        return null;
     }
-
-    if ("RetainingCountriesFragment".equals(fragmentName)){
-      return new RetainingCountriesFragment();
-    }
-
-    if ("NotRetainingCountriesFragment".equals(fragmentName)){
-      return new NotRetainingCountriesFragment();
-    }
-
-    if ("CustomViewStateFragment".equals(fragmentName)){
-      return new MyCustomFragment();
-    }
-
-    if ("NestedNotRetainingFragment".equals(fragmentName)){
-      return new NestedFragment();
-    }
-
-    if ("NestedNotRetainingViewPagerFragment".equals(fragmentName)){
-      return new NestedViewPagerFragment();
-    }
-
-    getSupportActionBar().setTitle(fragmentName);
-
-    return null;
-  }
 }

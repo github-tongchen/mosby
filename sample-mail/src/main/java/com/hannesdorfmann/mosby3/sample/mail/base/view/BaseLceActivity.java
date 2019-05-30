@@ -19,35 +19,41 @@ package com.hannesdorfmann.mosby3.sample.mail.base.view;
 
 import android.os.Bundle;
 import android.view.View;
+
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.MvpLceViewStateActivity;
+
 import icepick.Icepick;
 
 /**
  * @author Hannes Dorfmann
  */
 public abstract class BaseLceActivity<CV extends View, M, V extends MvpLceView<M>, P extends MvpPresenter<V>>
-    extends MvpLceViewStateActivity<CV, M, V, P> {
+        extends MvpLceViewStateActivity<CV, M, V, P> {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    injectDependencies();
-    super.onCreate(savedInstanceState);
-    Icepick.restoreInstanceState(this, savedInstanceState);
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
+        super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+    }
 
-  @Override public void onContentChanged() {
-    super.onContentChanged();
-    ButterKnife.bind(this);
-  }
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        ButterKnife.bind(this);
+    }
 
-  @Override protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    Icepick.saveInstanceState(this, outState);
-  }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
 
-  protected void injectDependencies() {
+    protected void injectDependencies() {
 
-  }
+    }
 }

@@ -19,6 +19,7 @@ package com.hannesdorfmann.mosby3.sample.mail.menu;
 import com.hannesdorfmann.mosby3.sample.mail.base.view.AuthView;
 import com.hannesdorfmann.mosby3.sample.mail.model.account.Account;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
+
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public interface MenuView extends AuthView<List<Label>> {
 
-  void setAccount(Account account);
+    void setAccount(Account account);
 
-  void decrementUnreadCount(String label);
+    void decrementUnreadCount(String label);
 }

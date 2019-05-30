@@ -21,21 +21,21 @@ package com.hannesdorfmann.mosby3.sample.mail.model.account;
  */
 public class AuthCredentials {
 
-  String username;
-  String password;
+    String username;
+    String password;
 
-  public AuthCredentials(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+    public AuthCredentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
 
-  public String getPassword() {
-    return password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
 }

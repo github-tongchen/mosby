@@ -10,13 +10,14 @@ import java.util.Comparator;
 public class MailComparator implements Comparator<Mail> {
 
 
-  public static final  MailComparator INSTANCE = new MailComparator();
+    public static final MailComparator INSTANCE = new MailComparator();
 
-  private MailComparator(){
+    private MailComparator() {
 
-  }
+    }
 
-  @Override public int compare(Mail lhs, Mail rhs) {
-    return rhs.getDate().compareTo(lhs.getDate());
-  }
+    @Override
+    public int compare(Mail lhs, Mail rhs) {
+        return rhs.getDate().compareTo(lhs.getDate());
+    }
 }

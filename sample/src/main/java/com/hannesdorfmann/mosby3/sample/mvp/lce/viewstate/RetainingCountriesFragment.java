@@ -51,97 +51,114 @@ import java.util.List;
  * @author Hannes Dorfmann
  */
 public class RetainingCountriesFragment extends
-    MvpLceViewStateFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
-    implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
+        MvpLceViewStateFragment<SwipeRefreshLayout, List<Country>, CountriesView, CountriesPresenter>
+        implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
 
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-  CountriesAdapter adapter;
-  private Unbinder unbinder;
+    CountriesAdapter adapter;
+    private Unbinder unbinder;
 
-  @Override public LceViewState<List<Country>, CountriesView> createViewState() {
-    setRetainInstance(true);
-    return new RetainingLceViewState<>();
-  }
-
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.countries_list, container, false);
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    adapter = null;
-    unbinder.unbind();
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstance) {
-    super.onViewCreated(view, savedInstance);
-    unbinder = ButterKnife.bind(this, view);
-
-    // Setup contentView == SwipeRefreshView
-    contentView.setOnRefreshListener(this);
-
-    // Setup recycler view
-    adapter = new CountriesAdapter(getActivity());
-    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    recyclerView.setAdapter(adapter);
-  }
-
-  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-  }
-
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadCountries(pullToRefresh);
-  }
-
-  @Override protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-    return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
-  }
-
-  @Override public CountriesPresenter createPresenter() {
-    return new SimpleCountriesPresenter();
-  }
-
-  @Override public void setData(List<Country> data) {
-    adapter.setCountries(data);
-    adapter.notifyDataSetChanged();
-  }
-
-  @Override public void onRefresh() {
-    loadData(true);
-  }
-
-  @Override public void showContent() {
-    super.showContent();
-    contentView.setRefreshing(false);
-  }
-
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-    super.showError(e, pullToRefresh);
-    contentView.setRefreshing(false);
-  }
-
-  @Override public void showLoading(boolean pullToRefresh) {
-    super.showLoading(pullToRefresh);
-    if (pullToRefresh && !contentView.isRefreshing()) {
-      // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
-      contentView.post(new Runnable() {
-        @Override public void run() {
-          contentView.setRefreshing(true);
-        }
-      });
+    @Override
+    public LceViewState<List<Country>, CountriesView> createViewState() {
+        setRetainInstance(true);
+        return new RetainingLceViewState<>();
     }
-  }
 
-  @Override public List<Country> getData() {
-    return adapter == null ? null : adapter.getCountries();
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.countries_list, container, false);
+    }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    SampleApplication.getRefWatcher(getActivity()).watch(this);
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        adapter = null;
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+        unbinder = ButterKnife.bind(this, view);
+
+        // Setup contentView == SwipeRefreshView
+        contentView.setOnRefreshListener(this);
+
+        // Setup recycler view
+        adapter = new CountriesAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadCountries(pullToRefresh);
+    }
+
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        return CountriesErrorMessage.get(e, pullToRefresh, getActivity());
+    }
+
+    @Override
+    public CountriesPresenter createPresenter() {
+        return new SimpleCountriesPresenter();
+    }
+
+    @Override
+    public void setData(List<Country> data) {
+        adapter.setCountries(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData(true);
+    }
+
+    @Override
+    public void showContent() {
+        super.showContent();
+        contentView.setRefreshing(false);
+    }
+
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        super.showError(e, pullToRefresh);
+        contentView.setRefreshing(false);
+    }
+
+    @Override
+    public void showLoading(boolean pullToRefresh) {
+        super.showLoading(pullToRefresh);
+        if (pullToRefresh && !contentView.isRefreshing()) {
+            // Workaround for measure bug: https://code.google.com/p/android/issues/detail?id=77712
+            contentView.post(new Runnable() {
+                @Override
+                public void run() {
+                    contentView.setRefreshing(true);
+                }
+            });
+        }
+    }
+
+    @Override
+    public List<Country> getData() {
+        return adapter == null ? null : adapter.getCountries();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SampleApplication.getRefWatcher(getActivity()).watch(this);
+    }
 }

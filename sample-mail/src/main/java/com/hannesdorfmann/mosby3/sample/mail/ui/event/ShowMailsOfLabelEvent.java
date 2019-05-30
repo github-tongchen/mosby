@@ -23,13 +23,13 @@ import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
  */
 public class ShowMailsOfLabelEvent {
 
-  private Label label;
+    private Label label;
 
-  public ShowMailsOfLabelEvent(Label label) {
-    this.label = label;
-  }
+    public ShowMailsOfLabelEvent(Label label) {
+        this.label = label;
+    }
 
-  public Label getLabel() {
-    return label;
-  }
+    public Label getLabel() {
+        return label;
+    }
 }

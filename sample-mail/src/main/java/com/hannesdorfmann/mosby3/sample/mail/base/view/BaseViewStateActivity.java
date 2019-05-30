@@ -18,11 +18,14 @@
 package com.hannesdorfmann.mosby3.sample.mail.base.view;
 
 import android.os.Bundle;
+
 import butterknife.ButterKnife;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
+
 import icepick.Icepick;
 
 /**
@@ -31,25 +34,28 @@ import icepick.Icepick;
  * @author Hannes Dorfmann
  */
 public abstract class BaseViewStateActivity<V extends MvpView, P extends MvpPresenter<V>, VS extends ViewState<V>>
-    extends MvpViewStateActivity<V, P, VS> {
+        extends MvpViewStateActivity<V, P, VS> {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    injectDependencies();
-    super.onCreate(savedInstanceState);
-    Icepick.restoreInstanceState(this, savedInstanceState);
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
+        super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+    }
 
-  @Override public void onContentChanged() {
-    super.onContentChanged();
-    ButterKnife.bind(this);
-  }
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        ButterKnife.bind(this);
+    }
 
-  @Override protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    Icepick.saveInstanceState(this, outState);
-  }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
 
-  protected void injectDependencies() {
+    protected void injectDependencies() {
 
-  }
+    }
 }

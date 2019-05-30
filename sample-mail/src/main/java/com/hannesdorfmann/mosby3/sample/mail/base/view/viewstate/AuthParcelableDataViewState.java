@@ -17,6 +17,7 @@
 package com.hannesdorfmann.mosby3.sample.mail.base.view.viewstate;
 
 import android.os.Parcelable;
+
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableDataLceViewState;
 import com.hannesdorfmann.mosby3.sample.mail.base.view.AuthView;
 
@@ -25,22 +26,24 @@ import com.hannesdorfmann.mosby3.sample.mail.base.view.AuthView;
  */
 @SuppressWarnings("ParcelCreator")
 public class AuthParcelableDataViewState<D extends Parcelable, V extends AuthView<D>>
-    extends ParcelableDataLceViewState<D, V> implements AuthViewState<D, V> {
+        extends ParcelableDataLceViewState<D, V> implements AuthViewState<D, V> {
 
-  @Override public void apply(V view, boolean retained) {
+    @Override
+    public void apply(V view, boolean retained) {
 
-    if (currentViewState == SHOWING_AUTHENTICATION_REQUIRED) {
-      view.showAuthenticationRequired();
-    } else {
-      super.apply(view, retained);
+        if (currentViewState == SHOWING_AUTHENTICATION_REQUIRED) {
+            view.showAuthenticationRequired();
+        } else {
+            super.apply(view, retained);
+        }
     }
-  }
 
-  @Override public void setShowingAuthenticationRequired() {
-    currentViewState = SHOWING_AUTHENTICATION_REQUIRED;
+    @Override
+    public void setShowingAuthenticationRequired() {
+        currentViewState = SHOWING_AUTHENTICATION_REQUIRED;
 
-    // Delete any previous stored data
-    loadedData = null;
-    exception = null;
-  }
+        // Delete any previous stored data
+        loadedData = null;
+        exception = null;
+    }
 }

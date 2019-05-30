@@ -35,119 +35,141 @@ import com.hannesdorfmann.mosby3.mvp.delegate.MvpDelegateCallback;
  * @since 1.0.0
  */
 public abstract class MvpFragment<V extends MvpView, P extends MvpPresenter<V>> extends Fragment
-    implements MvpDelegateCallback<V, P>, MvpView {
+        implements MvpDelegateCallback<V, P>, MvpView {
 
-  protected FragmentMvpDelegate mvpDelegate;
+    protected FragmentMvpDelegate mvpDelegate;
 
-  /**
-   * The presenter for this view. Will be instantiated with {@link #createPresenter()}
-   */
-  protected P presenter;
+    /**
+     * The presenter for this view. Will be instantiated with {@link #createPresenter()}
+     */
+    protected P presenter;
 
-  /**
-   * Creates a new presenter instance, if needed. Will reuse the previous presenter instance if
-   * {@link #setRetainInstance(boolean)} is set to true. This method will be called from
-   * {@link #onViewCreated(View, Bundle)}
-   */
-  public abstract P createPresenter();
+    /**
+     * Creates a new presenter instance, if needed. Will reuse the previous presenter instance if
+     * {@link #setRetainInstance(boolean)} is set to true. This method will be called from
+     * {@link #onViewCreated(View, Bundle)}
+     */
+    @Override
+    @NonNull
+    public abstract P createPresenter();
 
-  /**
-   * Gets the mvp delegate. This is internally used for creating presenter, attaching and
-   * detaching view from presenter.
-   *
-   * <p>
-   * <b>Please note that only one instance of mvp delegate should be used per fragment instance</b>.
-   * </p>
-   *
-   * <p>
-   * Only override this method if you really know what you are doing.
-   * </p>
-   *
-   * @return {@link FragmentMvpDelegateImpl}
-   */
-  @NonNull protected FragmentMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new FragmentMvpDelegateImpl<>(this, this, true, true);
+    /**
+     * Gets the mvp delegate. This is internally used for creating presenter, attaching and
+     * detaching view from presenter.
+     *
+     * <p>
+     * <b>Please note that only one instance of mvp delegate should be used per fragment instance</b>.
+     * </p>
+     *
+     * <p>
+     * Only override this method if you really know what you are doing.
+     * </p>
+     *
+     * @return {@link FragmentMvpDelegateImpl}
+     */
+    @NonNull
+    protected FragmentMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new FragmentMvpDelegateImpl<>(this, this, true, true);
+        }
+
+        return mvpDelegate;
     }
 
-    return mvpDelegate;
-  }
+    @NonNull
+    @Override
+    public P getPresenter() {
+        return presenter;
+    }
 
-  @NonNull @Override public P getPresenter() {
-    return presenter;
-  }
+    @Override
+    public void setPresenter(@NonNull P presenter) {
+        this.presenter = presenter;
+    }
 
-  @Override public void setPresenter(@NonNull P presenter) {
-    this.presenter = presenter;
-  }
+    @NonNull
+    @Override
+    public V getMvpView() {
+        return (V) this;
+    }
 
-  @NonNull @Override public V getMvpView() {
-    return (V) this;
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getMvpDelegate().onViewCreated(view, savedInstanceState);
+    }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    getMvpDelegate().onViewCreated(view, savedInstanceState);
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getMvpDelegate().onDestroyView();
+    }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    getMvpDelegate().onDestroyView();
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getMvpDelegate().onCreate(savedInstanceState);
+    }
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    getMvpDelegate().onCreate(savedInstanceState);
-  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getMvpDelegate().onDestroy();
+    }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    getMvpDelegate().onDestroy();
-  }
+    @Override
+    public void onPause() {
+        super.onPause();
+        getMvpDelegate().onPause();
+    }
 
-  @Override public void onPause() {
-    super.onPause();
-    getMvpDelegate().onPause();
-  }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMvpDelegate().onResume();
+    }
 
-  @Override public void onResume() {
-    super.onResume();
-    getMvpDelegate().onResume();
-  }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getMvpDelegate().onStart();
+    }
 
-  @Override public void onStart() {
-    super.onStart();
-    getMvpDelegate().onStart();
-  }
+    @Override
+    public void onStop() {
+        super.onStop();
+        getMvpDelegate().onStop();
+    }
 
-  @Override public void onStop() {
-    super.onStop();
-    getMvpDelegate().onStop();
-  }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getMvpDelegate().onActivityCreated(savedInstanceState);
+    }
 
-  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    getMvpDelegate().onActivityCreated(savedInstanceState);
-  }
+    @Deprecated
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        getMvpDelegate().onAttach(activity);
+    }
 
-  @Deprecated @Override public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    getMvpDelegate().onAttach(activity);
-  }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getMvpDelegate().onAttach(context);
+    }
 
-  @Override public void onAttach(Context context) {
-    super.onAttach(context);
-    getMvpDelegate().onAttach(context);
-  }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        getMvpDelegate().onDetach();
+    }
 
-  @Override public void onDetach() {
-    super.onDetach();
-    getMvpDelegate().onDetach();
-  }
-
-  @Override public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    getMvpDelegate().onSaveInstanceState(outState);
-  }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getMvpDelegate().onSaveInstanceState(outState);
+    }
 }
 

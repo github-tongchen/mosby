@@ -42,86 +42,102 @@ import de.greenrobot.event.EventBus;
  * @author Hannes Dorfmann
  */
 public class MenuFragment extends AuthRefreshRecyclerFragment<List<Label>, MenuView, MenuPresenter>
-    implements MenuView, MenuAdapter.LabelClickListener {
+        implements MenuView, MenuAdapter.LabelClickListener {
 
-  @BindView(R.id.email) TextView email;
-  @BindView(R.id.name) TextView name;
-  @BindView(R.id.profilePic) ImageView profilePic;
+    @BindView(R.id.email)
+    TextView email;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.profilePic)
+    ImageView profilePic;
 
-  @Inject EventBus eventBus;
-  @Inject IntentStarter intentStarter;
+    @Inject
+    EventBus eventBus;
+    @Inject
+    IntentStarter intentStarter;
 
-  private MenuComponent menuComponent;
+    private MenuComponent menuComponent;
 
-  @Override protected int getLayoutRes() {
-    return R.layout.fragment_menu;
-  }
-
-  @Override public AuthViewState<List<Label>, MenuView> createViewState() {
-    return new MenuViewState();
-  }
-
-  @Override protected ListAdapter<List<Label>> createAdapter() {
-    return new MenuAdapter(getActivity(), this);
-  }
-
-  @Override public void setAccount(Account account) {
-
-    MenuViewState vs = (MenuViewState) viewState;
-    vs.setAccount(account);
-
-    email.setText(account.getEmail());
-    name.setText(account.getName());
-    profilePic.setImageResource(account.getImageRes());
-
-    email.setVisibility(View.VISIBLE);
-    name.setVisibility(View.VISIBLE);
-    profilePic.setVisibility(View.VISIBLE);
-  }
-
-  @Override public void showAuthenticationRequired() {
-    super.showAuthenticationRequired();
-
-    email.setVisibility(View.GONE);
-    name.setVisibility(View.GONE);
-    profilePic.setVisibility(View.GONE);
-  }
-
-  @Override public MenuPresenter createPresenter() {
-    return menuComponent.presenter();
-  }
-
-  @Override public void loadData(boolean pullToRefresh) {
-    presenter.loadLabels(pullToRefresh);
-  }
-
-  @Override protected void injectDependencies() {
-    menuComponent = DaggerMenuComponent.builder()
-        .mailAppComponent(MailApplication.getMailComponents())
-        .navigationModule(new NavigationModule())
-        .build();
-    menuComponent.inject(this);
-  }
-
-  @Override public void onLabelClicked(Label label) {
-    intentStarter.showMailsOfLabel(getActivity(), label);
-  }
-
-  @Override public void onStatisticsClicked() {
-    getActivity().getSupportFragmentManager()
-        .beginTransaction()
-        .add(new StatisticsDialog(), null)
-        .commit();
-  }
-
-  @Override public void decrementUnreadCount(String label) {
-
-    for (Label l : adapter.getItems()) {
-      if (l.getName().equals(label)) {
-        l.decrementUnreadCount();
-        adapter.notifyDataSetChanged();
-        return;
-      }
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_menu;
     }
-  }
+
+    @Override
+    public AuthViewState<List<Label>, MenuView> createViewState() {
+        return new MenuViewState();
+    }
+
+    @Override
+    protected ListAdapter<List<Label>> createAdapter() {
+        return new MenuAdapter(getActivity(), this);
+    }
+
+    @Override
+    public void setAccount(Account account) {
+
+        MenuViewState vs = (MenuViewState) viewState;
+        vs.setAccount(account);
+
+        email.setText(account.getEmail());
+        name.setText(account.getName());
+        profilePic.setImageResource(account.getImageRes());
+
+        email.setVisibility(View.VISIBLE);
+        name.setVisibility(View.VISIBLE);
+        profilePic.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showAuthenticationRequired() {
+        super.showAuthenticationRequired();
+
+        email.setVisibility(View.GONE);
+        name.setVisibility(View.GONE);
+        profilePic.setVisibility(View.GONE);
+    }
+
+    @Override
+    public MenuPresenter createPresenter() {
+        return menuComponent.presenter();
+    }
+
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        presenter.loadLabels(pullToRefresh);
+    }
+
+    @Override
+    protected void injectDependencies() {
+        menuComponent = DaggerMenuComponent.builder()
+                .mailAppComponent(MailApplication.getMailComponents())
+                .navigationModule(new NavigationModule())
+                .build();
+        menuComponent.inject(this);
+    }
+
+    @Override
+    public void onLabelClicked(Label label) {
+        intentStarter.showMailsOfLabel(getActivity(), label);
+    }
+
+    @Override
+    public void onStatisticsClicked() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .add(new StatisticsDialog(), null)
+                .commit();
+    }
+
+    @Override
+    public void decrementUnreadCount(String label) {
+
+        for (Label l : adapter.getItems()) {
+            if (l.getName().equals(label)) {
+                l.decrementUnreadCount();
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 }

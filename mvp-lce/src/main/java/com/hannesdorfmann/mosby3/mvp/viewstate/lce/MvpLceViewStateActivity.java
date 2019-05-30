@@ -18,6 +18,7 @@ package com.hannesdorfmann.mosby3.mvp.viewstate.lce;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpDelegate;
 import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpViewStateDelegateImpl;
@@ -33,77 +34,89 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
  * @since 1.0.0
  */
 public abstract class MvpLceViewStateActivity<CV extends View, M, V extends MvpLceView<M>, P extends MvpPresenter<V>>
-    extends MvpLceActivity<CV, M, V, P>
-    implements MvpLceView<M>, MvpViewStateDelegateCallback<V, P, LceViewState<M, V>> {
+        extends MvpLceActivity<CV, M, V, P>
+        implements MvpLceView<M>, MvpViewStateDelegateCallback<V, P, LceViewState<M, V>> {
 
-  protected LceViewState<M, V> viewState;
-  protected boolean restoringViewState = false;
+    protected LceViewState<M, V> viewState;
+    protected boolean restoringViewState = false;
 
-  @Override @NonNull protected ActivityMvpDelegate getMvpDelegate() {
-    if (mvpDelegate == null) {
-      mvpDelegate = new ActivityMvpViewStateDelegateImpl<>(this, this, true);
+    @Override
+    @NonNull
+    protected ActivityMvpDelegate getMvpDelegate() {
+        if (mvpDelegate == null) {
+            mvpDelegate = new ActivityMvpViewStateDelegateImpl<>(this, this, true);
+        }
+
+        return mvpDelegate;
     }
 
-    return mvpDelegate;
-  }
-
-  @Override public LceViewState<M, V> getViewState() {
-    return viewState;
-  }
-
-  @Override public void setViewState(LceViewState<M, V> viewState) {
-    this.viewState = viewState;
-  }
-
-  @Override public void setRestoringViewState(boolean restoringViewState) {
-    this.restoringViewState = restoringViewState;
-  }
-
-  @Override public boolean isRestoringViewState() {
-    return restoringViewState;
-  }
-
-  @Override public void onNewViewStateInstance() {
-    loadData(false);
-  }
-
-  @Override public void onViewStateInstanceRestored(boolean instanceStateRetainedInMemory) {
-    if (!instanceStateRetainedInMemory && viewState.isLoadingState()) {
-      loadData(viewState.isPullToRefreshLoadingState());
-    }
-  }
-
-  @Override public void showContent() {
-    super.showContent();
-    viewState.setStateShowContent(getData());
-  }
-
-  @Override public void showError(Throwable e, boolean pullToRefresh) {
-    super.showError(e, pullToRefresh);
-    viewState.setStateShowError(e, pullToRefresh);
-  }
-
-  @Override public void showLoading(boolean pullToRefresh) {
-    super.showLoading(pullToRefresh);
-    viewState.setStateShowLoading(pullToRefresh);
-  }
-
-  @Override protected void showLightError(String msg) {
-    if (isRestoringViewState()) {
-      return; // Do not display toast again while restoring viewstate
+    @Override
+    public LceViewState<M, V> getViewState() {
+        return viewState;
     }
 
-    super.showLightError(msg);
-  }
+    @Override
+    public void setViewState(LceViewState<M, V> viewState) {
+        this.viewState = viewState;
+    }
 
-  /**
-   * Get the data that has been set before in {@link #setData(Object)}
-   * <p>
-   * <b>It's necessary to return the same data as set before to ensure that {@link ViewState} works
-   * correctly</b>
-   * </p>
-   *
-   * @return The data
-   */
-  public abstract M getData();
+    @Override
+    public void setRestoringViewState(boolean restoringViewState) {
+        this.restoringViewState = restoringViewState;
+    }
+
+    @Override
+    public boolean isRestoringViewState() {
+        return restoringViewState;
+    }
+
+    @Override
+    public void onNewViewStateInstance() {
+        loadData(false);
+    }
+
+    @Override
+    public void onViewStateInstanceRestored(boolean instanceStateRetainedInMemory) {
+        if (!instanceStateRetainedInMemory && viewState.isLoadingState()) {
+            loadData(viewState.isPullToRefreshLoadingState());
+        }
+    }
+
+    @Override
+    public void showContent() {
+        super.showContent();
+        viewState.setStateShowContent(getData());
+    }
+
+    @Override
+    public void showError(Throwable e, boolean pullToRefresh) {
+        super.showError(e, pullToRefresh);
+        viewState.setStateShowError(e, pullToRefresh);
+    }
+
+    @Override
+    public void showLoading(boolean pullToRefresh) {
+        super.showLoading(pullToRefresh);
+        viewState.setStateShowLoading(pullToRefresh);
+    }
+
+    @Override
+    protected void showLightError(String msg) {
+        if (isRestoringViewState()) {
+            return; // Do not display toast again while restoring viewstate
+        }
+
+        super.showLightError(msg);
+    }
+
+    /**
+     * Get the data that has been set before in {@link #setData(Object)}
+     * <p>
+     * <b>It's necessary to return the same data as set before to ensure that {@link ViewState} works
+     * correctly</b>
+     * </p>
+     *
+     * @return The data
+     */
+    public abstract M getData();
 }

@@ -24,15 +24,17 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  * Used for partial mocking the delegate callback
  */
 public abstract class PartialMvpDelegateCallbackImpl
-    implements MvpDelegateCallback<MvpView, MvpPresenter<MvpView>> {
+        implements MvpDelegateCallback<MvpView, MvpPresenter<MvpView>> {
 
-  MvpPresenter<MvpView> presenter;
+    MvpPresenter<MvpView> presenter;
 
-  @Override public MvpPresenter<MvpView> getPresenter() {
-    return presenter;
-  }
+    @Override
+    public MvpPresenter<MvpView> getPresenter() {
+        return presenter;
+    }
 
-  @Override public void setPresenter(MvpPresenter<MvpView> presenter) {
-    this.presenter = presenter;
-  }
+    @Override
+    public void setPresenter(MvpPresenter<MvpView> presenter) {
+        this.presenter = presenter;
+    }
 }

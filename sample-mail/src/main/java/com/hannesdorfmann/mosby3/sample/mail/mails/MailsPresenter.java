@@ -23,8 +23,11 @@ import com.hannesdorfmann.mosby3.sample.mail.model.event.MailSentEvent;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Mail;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.MailProvider;
+
 import de.greenrobot.event.EventBus;
+
 import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -32,25 +35,26 @@ import javax.inject.Inject;
  */
 public class MailsPresenter extends BaseRxMailPresenter<MailsView, List<Mail>> {
 
-  @Inject public MailsPresenter(MailProvider mailProvider, EventBus eventBus) {
-    super(mailProvider, eventBus);
-  }
-
-  public void load(boolean pullToRefresh, Label label) {
-    subscribe(mailProvider.getMailsOfLabel(label.getName()), pullToRefresh);
-  }
-
-  public void onEventMainThread(MailSentEvent event) {
-    onEventMainThread(new MailLabelChangedEvent(event.getMail(), event.getMail().getLabel()));
-  }
-
-  public void onEventMainThread(MailReceivedEvent event) {
-    onEventMainThread(new MailLabelChangedEvent(event.getMail(), event.getMail().getLabel()));
-  }
-
-  public void onEventMainThread(MailLabelChangedEvent event) {
-    if (isViewAttached()) {
-      getView().changeLabel(event.getMail(), event.getLabel());
+    @Inject
+    public MailsPresenter(MailProvider mailProvider, EventBus eventBus) {
+        super(mailProvider, eventBus);
     }
-  }
+
+    public void load(boolean pullToRefresh, Label label) {
+        subscribe(mailProvider.getMailsOfLabel(label.getName()), pullToRefresh);
+    }
+
+    public void onEventMainThread(MailSentEvent event) {
+        onEventMainThread(new MailLabelChangedEvent(event.getMail(), event.getMail().getLabel()));
+    }
+
+    public void onEventMainThread(MailReceivedEvent event) {
+        onEventMainThread(new MailLabelChangedEvent(event.getMail(), event.getMail().getLabel()));
+    }
+
+    public void onEventMainThread(MailLabelChangedEvent event) {
+        if (isViewAttached()) {
+            getView().changeLabel(event.getMail(), event.getLabel());
+        }
+    }
 }
