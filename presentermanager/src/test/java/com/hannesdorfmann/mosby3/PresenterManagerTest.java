@@ -422,10 +422,6 @@ public class PresenterManagerTest {
             }
 
             @Override
-            public void detachView(boolean retainInstance) {
-            }
-
-            @Override
             public void detachView() {
             }
 
