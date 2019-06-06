@@ -10,7 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         //  classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.2'
         //classpath 'me.tatarka:gradle-retrolambda:3.5.0'
     }
@@ -41,7 +41,7 @@ allprojects {
 ext {
     minSdk = 14
     targetSdk = 25
-    buildToolsVersion = '28.0.1'
+    buildToolsVersion = '28.0.3'
     compileSdkVersion = 28
 
     javaSourceCompatibility = JavaVersion.VERSION_1_7
