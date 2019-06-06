@@ -2,18 +2,18 @@ package com.hannesdorfmann.mosby3.sample.mail.label;
 
 import android.os.Parcel;
 
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.mail.model.mail.Label;
 
 import java.util.List;
 
 /**
  * I'm to lazy to write my own view state class without an error state, therefore I reuse the
- * CastedArrayListLceViewState. Don't do that in a real world application :)
+ * ParcelableListLceViewState. Don't do that in a real world application :)
  *
  * @author Hannes Dorfmann
  */
-public class LabelViewState extends CastedArrayListLceViewState<List<Label>, LabelView> {
+public class LabelViewState extends ParcelableListLceViewState<List<Label>, LabelView> {
 
     public static final Creator<LabelViewState> CREATOR = new Creator<LabelViewState>() {
         @Override

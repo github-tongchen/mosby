@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.MvpLceViewStateActivity;
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.R;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesAdapter;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesErrorMessage;
@@ -69,7 +69,7 @@ public class NotRetainingCountriesActivity extends
 
     @Override
     public LceViewState<List<Country>, CountriesView> createViewState() {
-        return new CastedArrayListLceViewState<>();
+        return new ParcelableListLceViewState<>();
     }
 
     @Override

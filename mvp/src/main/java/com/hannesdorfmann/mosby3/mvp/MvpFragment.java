@@ -147,13 +147,6 @@ public abstract class MvpFragment<V extends MvpView, P extends MvpPresenter<V>> 
         getMvpDelegate().onActivityCreated(savedInstanceState);
     }
 
-    @Deprecated
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        getMvpDelegate().onAttach(activity);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

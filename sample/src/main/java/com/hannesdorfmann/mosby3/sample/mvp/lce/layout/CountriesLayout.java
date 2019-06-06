@@ -13,9 +13,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.hannesdorfmann.mosby3.mvp.viewstate.ViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.layout.MvpViewStateFrameLayout;
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.R;
 import com.hannesdorfmann.mosby3.sample.SampleApplication;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesAdapter;
@@ -32,7 +31,7 @@ import butterknife.OnClick;
 /**
  * @author Hannes Dorfmann
  */
-public class CountriesLayout extends MvpViewStateFrameLayout<CountriesView, CountriesPresenter, CastedArrayListLceViewState<List<Country>, CountriesView>>
+public class CountriesLayout extends MvpViewStateFrameLayout<CountriesView, CountriesPresenter, ParcelableListLceViewState<List<Country>, CountriesView>>
         implements CountriesView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.loadingView)
@@ -81,8 +80,8 @@ public class CountriesLayout extends MvpViewStateFrameLayout<CountriesView, Coun
     }
 
     @Override
-    public CastedArrayListLceViewState<List<Country>, CountriesView> createViewState() {
-        return new CastedArrayListLceViewState<List<Country>, CountriesView>();
+    public ParcelableListLceViewState<List<Country>, CountriesView> createViewState() {
+        return new ParcelableListLceViewState<List<Country>, CountriesView>();
     }
 
     @Override

@@ -111,10 +111,8 @@ public abstract class BaseRxLcePresenter<V extends MvpLceView<M>, M>
     }
 
     @Override
-    public void detachView(boolean retainInstance) {
-        super.detachView(retainInstance);
-        if (!retainInstance) {
-            unsubscribe();
-        }
+    public void detachView() {
+        super.detachView();
+        unsubscribe();
     }
 }

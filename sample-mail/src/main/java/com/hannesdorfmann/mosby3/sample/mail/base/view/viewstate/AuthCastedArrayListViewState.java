@@ -19,7 +19,7 @@ package com.hannesdorfmann.mosby3.sample.mail.base.view.viewstate;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.mail.base.view.AuthView;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @SuppressWarnings("ParcelCreator")
 public class AuthCastedArrayListViewState<D extends List<? extends Parcelable>, V extends AuthView<D>>
-        extends CastedArrayListLceViewState<D, V> implements AuthViewState<D, V> {
+        extends ParcelableListLceViewState<D, V> implements AuthViewState<D, V> {
 
     public AuthCastedArrayListViewState() {
     }

@@ -37,8 +37,8 @@ public class LabelPresenter extends BaseRxLcePresenter<LabelView, List<Label>> {
     }
 
     @Override
-    public void detachView(boolean retainInstance) {
-        super.detachView(retainInstance);
+    public void detachView() {
+        super.detachView();
         eventBus.unregister(this);
     }
 

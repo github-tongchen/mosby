@@ -142,12 +142,6 @@ public abstract class MvpDialogFragment<V extends MvpView, P extends MvpPresente
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        getMvpDelegate().onAttach(activity);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         getMvpDelegate().onAttach(context);

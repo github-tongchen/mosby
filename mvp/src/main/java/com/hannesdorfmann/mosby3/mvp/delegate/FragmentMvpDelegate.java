@@ -41,7 +41,6 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  * <li>{@link #onViewCreated(View, Bundle)} </li>
  * <li>{@link #onActivityCreated(Bundle)} </li>
  * <li>{@link #onSaveInstanceState(Bundle)} </li>
- * <li>{@link #onAttach(Activity)} </li>
  * <li>{@link #onAttach(Context)} </li>
  * <li>{@link #onDetach()}</li>
  * <li></li>
@@ -106,14 +105,6 @@ public interface FragmentMvpDelegate<V extends MvpView, P extends MvpPresenter<V
      * @param savedInstanceState The saved bundle
      */
     void onActivityCreated(Bundle savedInstanceState);
-
-    /**
-     * Must be called from {@link Fragment#onAttach(Activity)}
-     *
-     * @param activity The activity the fragment is attached to
-     */
-    @Deprecated
-    void onAttach(Activity activity);
 
     /**
      * Must be called from {@link Fragment#onAttach(Context)}

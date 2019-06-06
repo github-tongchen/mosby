@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.ParcelableLceViewState;
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.mail.MailApplication;
 import com.hannesdorfmann.mosby3.sample.mail.R;
 import com.hannesdorfmann.mosby3.sample.mail.base.view.BaseLceActivity;
@@ -115,7 +115,7 @@ public class ProfileActivity
 
     @Override
     public ParcelableLceViewState<List<ProfileScreen>, ProfileView> createViewState() {
-        return new CastedArrayListLceViewState<>();
+        return new ParcelableListLceViewState<>();
     }
 
     @Override

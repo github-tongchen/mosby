@@ -277,10 +277,6 @@ public class FragmentMvpViewStateDelegateImpl<V extends MvpView, P extends MvpPr
     }
 
     @Override
-    public void onAttach(Activity activity) {
-    }
-
-    @Override
     public void onAttach(Context context) {
     }
 

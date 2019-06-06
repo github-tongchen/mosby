@@ -2,6 +2,7 @@ package com.hannesdorfmann.mosby3.sample.mail.statistics;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -113,9 +114,9 @@ public class StatisticsDialog extends AppCompatDialogFragment implements Statist
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        delegate.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        delegate.onAttach(context);
     }
 
     @Override

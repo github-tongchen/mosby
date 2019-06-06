@@ -39,16 +39,6 @@ public interface MvpPresenter<V extends MvpView> {
     void attachView(@NonNull V view);
 
     /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
-     *
-     * @deprecated This method has been split into 2 methods: {@link #detachView()} and {@link #destroy()}
-     */
-    @UiThread
-    @Deprecated
-    void detachView(boolean retainInstance);
-
-    /**
      * Will be called if the view has been detached from the Presenter.
      * Usually this happens on screen orientation changes or view (like fragment) has been put on the backstack.
      */

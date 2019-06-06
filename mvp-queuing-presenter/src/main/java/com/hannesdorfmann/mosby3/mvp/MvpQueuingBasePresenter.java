@@ -65,14 +65,6 @@ public class MvpQueuingBasePresenter<V extends MvpView> implements MvpPresenter<
     /**
      * {@inheritDoc}
      */
-    @Deprecated
-    @Override
-    public void detachView(boolean retainInstance) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void detachView() {
         viewRef.clear();

@@ -64,7 +64,7 @@ public class ParcelableListLceViewState<D extends List<? extends Parcelable>, V 
 /*
     if (loadedData != null && !(loadedData instanceof ArrayList)) {
       throw new ClassCastException(
-          "You try to use CastedArrayListLceViewState which takes List<D> as argument but "
+          "You try to use ParcelableListLceViewState which takes List<D> as argument but "
               + "assumes that it's an instance of ArrayList<D>. Howerver, your loaded data is not an ArrayList"
               + " but it's of type "
               + loadedData.getClass().getCanonicalName()

@@ -32,7 +32,7 @@ import butterknife.Unbinder;
 
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby3.mvp.viewstate.lce.MvpLceViewStateFragment;
-import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.CastedArrayListLceViewState;
+import com.hannesdorfmann.mosby3.mvp.viewstate.lce.data.ParcelableListLceViewState;
 import com.hannesdorfmann.mosby3.sample.R;
 import com.hannesdorfmann.mosby3.sample.SampleApplication;
 import com.hannesdorfmann.mosby3.sample.mvp.CountriesAdapter;
@@ -63,7 +63,7 @@ public class NotRetainingCountriesFragment extends
     @Override
     public LceViewState<List<Country>, CountriesView> createViewState() {
         Log.d(getTag(), "createViewState()");
-        return new CastedArrayListLceViewState<>();
+        return new ParcelableListLceViewState<>();
     }
 
     @Override

@@ -67,8 +67,8 @@ public class WritePresenter extends MvpBasePresenter<WriteView> {
     }
 
     @Override
-    public void detachView(boolean retainInstance) {
-        super.detachView(retainInstance);
+    public void detachView() {
+        super.detachView();
         eventBus.unregister(this);
     }
 }

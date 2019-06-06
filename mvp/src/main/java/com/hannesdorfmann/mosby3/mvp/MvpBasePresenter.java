@@ -105,15 +105,6 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Deprecated
-    @UiThread
-    @Override
-    public void detachView(boolean retainInstance) {
-    }
-
-    /**
      * Executes the passed Action only if the View is attached.
      * If no View is attached, either an exception is thrown (if parameter exceptionIfViewNotAttached
      * is true) or the action is just not executed (no exception thrown).
@@ -152,7 +143,6 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
      */
     @Override
     public void detachView() {
-        detachView(true);
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;
@@ -164,7 +154,6 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
      */
     @Override
     public void destroy() {
-        detachView(false);
         presenterDestroyed = true;
     }
 }
