@@ -5,10 +5,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        /*maven {
-            url "https://maven.google.com"
-        }
-        google()*/
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -19,24 +15,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-
-        //  2个sample会用到
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
-
-        //  sample-mail会用到
-        maven {
-            url "https://jitpack.io"
-        }
-
-        /*maven {
-            url 'https://clojars.org/repo/'
-        }*/
-
-        /*maven {
-            url "https://maven.google.com"
-        }*/
     }
 }
 

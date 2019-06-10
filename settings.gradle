@@ -2,8 +2,6 @@ include ':mvp-common',
         ':mvp-queuing-presenter',
         ':mvp',
         ':viewstate',
-        ':sample',
-        ':sample-mail',
         ':mvp-lce',
         ':presentermanager',
         ':utils-fragment'
