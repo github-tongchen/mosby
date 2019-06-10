@@ -33,51 +33,51 @@ android {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-    compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
+    implementation 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
 
-    compile project(':mvp-lce')
+    implementation project(':mvp-lce')
 
 
-    compile 'de.greenrobot:eventbus:2.4.0'
+    implementation 'de.greenrobot:eventbus:2.4.0'
 
 
     // UI
-    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
-    compile 'com.rengwuxian.materialedittext:library:2.0.3'
-    compile 'com.github.jjhesk:hkm-progress-button:0.15'
-    compile 'de.hdodenhof:circleimageview:1.2.2'
-    compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
-    compile 'com.github.chenupt:DragTopLayout:1.2.1'
+    implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
+    implementation 'com.rengwuxian.materialedittext:library:2.0.3'
+    implementation 'com.github.jjhesk:hkm-progress-button:0.15'
+    implementation 'de.hdodenhof:circleimageview:1.2.2'
+    implementation 'com.melnykov:floatingactionbutton:1.3.0'
+    implementation 'com.jpardogo.materialtabstrip:library:1.0.9'
+    implementation 'com.github.chenupt:DragTopLayout:1.2.1'
 
-    compile 'io.reactivex:rxjava:' + rootProject.ext.rxjavaVersion
-    compile 'io.reactivex:rxandroid:' + rootProject.ext.rxandroidVersion
+    implementation 'io.reactivex:rxjava:' + rootProject.ext.rxjavaVersion
+    implementation 'io.reactivex:rxandroid:' + rootProject.ext.rxandroidVersion
 
     annotationProcessor 'com.hannesdorfmann.annotatedadapter:processor:' + rootProject.ext.annotatedadapterVersion
-    compile 'com.hannesdorfmann.annotatedadapter:annotation:' + rootProject.ext.annotatedadapterVersion
-    compile 'com.hannesdorfmann.annotatedadapter:support-recyclerview:' + rootProject.ext.annotatedadapterVersion
+    implementation 'com.hannesdorfmann.annotatedadapter:annotation:' + rootProject.ext.annotatedadapterVersion
+    implementation 'com.hannesdorfmann.annotatedadapter:support-recyclerview:' + rootProject.ext.annotatedadapterVersion
 
 
-    compile 'com.hannesdorfmann.parcelableplease:annotation:' + rootProject.ext.parcelablepleaseVersion
+    implementation 'com.hannesdorfmann.parcelableplease:annotation:' + rootProject.ext.parcelablepleaseVersion
     annotationProcessor 'com.hannesdorfmann.parcelableplease:processor:' + rootProject.ext.parcelablepleaseVersion
 
-    compile 'com.jakewharton:butterknife:' + rootProject.ext.butterknifeVersion
+    implementation 'com.jakewharton:butterknife:' + rootProject.ext.butterknifeVersion
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.ext.butterknifeVersion
 
-    compile 'frankiesardo:icepick:' + rootProject.ext.icepickVersion
+    implementation 'frankiesardo:icepick:' + rootProject.ext.icepickVersion
     annotationProcessor 'frankiesardo:icepick-processor:' + rootProject.ext.icepickVersion
-    compile 'com.hannesdorfmann.fragmentargs:annotation:' + rootProject.ext.fragmentargsVersion
+    implementation 'com.hannesdorfmann.fragmentargs:annotation:' + rootProject.ext.fragmentargsVersion
     annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:' + rootProject.ext.fragmentargsVersion
-    compile 'com.google.dagger:dagger:' + rootProject.ext.dagger2Version
+    implementation 'com.google.dagger:dagger:' + rootProject.ext.dagger2Version
     annotationProcessor 'com.google.dagger:dagger-compiler:' + rootProject.ext.dagger2Version
-    compile 'javax.annotation:javax.annotation-api:1.2'
+    implementation 'javax.annotation:javax.annotation-api:1.2'
 
 
-    compile 'com.squareup.leakcanary:leakcanary-android:' + rootProject.ext.leakcanaryVersion
+    implementation 'com.squareup.leakcanary:leakcanary-android:' + rootProject.ext.leakcanaryVersion
 
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:' + rootProject.ext.robolectricVersion
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:' + rootProject.ext.robolectricVersion
 }

@@ -3,37 +3,40 @@
 buildscript {
 
     repositories {
+        google()
         jcenter()
-        maven {
+        /*maven {
             url "https://maven.google.com"
         }
-        google()
+        google()*/
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
-        //  classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.2'
-        //classpath 'me.tatarka:gradle-retrolambda:3.5.0'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
+
+        //  2个sample会用到
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
 
+        //  sample-mail会用到
         maven {
             url "https://jitpack.io"
         }
 
-        maven {
+        /*maven {
             url 'https://clojars.org/repo/'
-        }
+        }*/
 
-        maven {
+        /*maven {
             url "https://maven.google.com"
-        }
+        }*/
     }
 }
 
