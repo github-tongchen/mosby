@@ -35,6 +35,27 @@ import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableParcelableViewState;
 public class MosbyViewStateSavedState extends MosbySavedState {
 
     public static final Parcelable.Creator<MosbyViewStateSavedState> CREATOR =
+            new Parcelable.ClassLoaderCreator<MosbyViewStateSavedState>() {
+
+                @Override
+                public MosbyViewStateSavedState createFromParcel(Parcel source) {
+                    return new MosbyViewStateSavedState(source, RestorableParcelableViewState.class.getClassLoader());
+                }
+
+                @Override
+                public MosbyViewStateSavedState[] newArray(int size) {
+                    return new MosbyViewStateSavedState[size];
+                }
+
+                @Override
+                public MosbyViewStateSavedState createFromParcel(Parcel source, ClassLoader loader) {
+                    if (loader == null) {
+                        loader = RestorableParcelableViewState.class.getClassLoader();
+                    }
+                    return new MosbyViewStateSavedState(source, loader);
+                }
+            };
+    /*public static final Parcelable.Creator<MosbyViewStateSavedState> CREATOR =
             ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<MosbyViewStateSavedState>() {
                 public MosbyViewStateSavedState createFromParcel(Parcel in, ClassLoader loader) {
                     if (loader == null) {
@@ -46,7 +67,7 @@ public class MosbyViewStateSavedState extends MosbySavedState {
                 public MosbyViewStateSavedState[] newArray(int size) {
                     return new MosbyViewStateSavedState[size];
                 }
-            });
+            });*/
 
     private RestorableParcelableViewState mosbyViewState;
 

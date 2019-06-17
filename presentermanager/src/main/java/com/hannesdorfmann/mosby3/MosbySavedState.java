@@ -18,8 +18,6 @@ package com.hannesdorfmann.mosby3;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.os.ParcelableCompat;
-import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 import android.support.v4.view.AbsSavedState;
 
 /**
@@ -30,7 +28,30 @@ import android.support.v4.view.AbsSavedState;
  */
 public class MosbySavedState extends AbsSavedState {
 
+    //  Update by TongChen
     public static final Creator<MosbySavedState> CREATOR =
+            new Parcelable.ClassLoaderCreator<MosbySavedState>() {
+
+                @Override
+                public MosbySavedState createFromParcel(Parcel source) {
+                    return new MosbySavedState(source, MosbySavedState.class.getClassLoader());
+                }
+
+                @Override
+                public MosbySavedState[] newArray(int size) {
+                    return new MosbySavedState[size];
+                }
+
+                @Override
+                public MosbySavedState createFromParcel(Parcel source, ClassLoader loader) {
+                    if (loader == null) {
+                        loader = MosbySavedState.class.getClassLoader();
+                    }
+                    return new MosbySavedState(source, loader);
+                }
+            };
+
+    /*public static final Creator<MosbySavedState> CREATOR =
             ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<MosbySavedState>() {
                 public MosbySavedState createFromParcel(Parcel in, ClassLoader loader) {
                     if (loader == null) {
@@ -42,7 +63,7 @@ public class MosbySavedState extends AbsSavedState {
                 public MosbySavedState[] newArray(int size) {
                     return new MosbySavedState[size];
                 }
-            });
+            });*/
 
     private String mosbyViewId;
 

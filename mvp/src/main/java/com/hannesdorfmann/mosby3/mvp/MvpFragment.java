@@ -160,7 +160,7 @@ public abstract class MvpFragment<V extends MvpView, P extends MvpPresenter<V>> 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         getMvpDelegate().onSaveInstanceState(outState);
     }

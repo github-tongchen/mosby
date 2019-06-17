@@ -154,7 +154,7 @@ public abstract class MvpDialogFragment<V extends MvpView, P extends MvpPresente
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         getMvpDelegate().onSaveInstanceState(outState);
     }
